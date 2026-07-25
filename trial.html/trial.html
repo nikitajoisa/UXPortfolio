@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nikita Joisa — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=WindSong:wght@400;500&family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ---------- licensed fonts ----------
+     Once you've bought + downloaded the webfont files, drop them in /fonts
+     next to this HTML file and uncomment these blocks, matching filenames
+     to what you actually received. */
+  /*
+  @font-face{
+    font-family:'The Seasons';
+    src: url('fonts/TheSeasons-Regular.woff2') format('woff2'),
+         url('fonts/TheSeasons-Regular.woff') format('woff');
+    font-weight:400; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:'Beautifully Delicious Script';
+    src: url('fonts/BeautifullyDeliciousScript-Regular.woff2') format('woff2'),
+         url('fonts/BeautifullyDeliciousScript-Regular.woff') format('woff');
+    font-weight:400; font-style:normal; font-display:swap;
+  }
+  */
+
+  :root{
+    --bg: #f7f6f2;
+    --card-bg: #ffffff;
+    --card-bg-muted: #eeece6;
+    --ink: #1c1b18;
+    --ink-soft: #4a4842;
+    --gray: #99958a;
+    --line: #e2ded3;
+    --accent: #8a2f42;
+    --accent-soft: #f6e9ea;
+    --green: #6f9b6f;
+    --sage: #a9bfae;
+    --radius: 14px;
+    --stitch-dark:       #34302a;
+    --stitch-dark-soft:  #5a5145;
+    --stitch-red:        #8c4636;
+    --stitch-red-light:  #b96b52;
+    --glow-warm:         rgba(196,120,80,0.45);
+    --ease-bloom:        cubic-bezier(0.16, 1, 0.3, 1);
+    --serif: "Source Serif 4", Georgia, serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --seasons: "The Seasons", "Cormorant Garamond", Georgia, serif;
+    --script: "Beautifully Delicious Script", "WindSong", cursive;
+    --rounded-sans: "Quicksand", "Inter", sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      linear-gradient(to right, #dfe8ee 1px, transparent 1px),
+      linear-gradient(to bottom, #dfe8ee 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+  a{ color: inherit; }
+
+  .wrap{
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ---------- shared typography ---------- */
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 18px;
+  }
+  .eyebrow-icon{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 17px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink);
+  }
+  .eyebrow-icon svg{ width:20px; height:20px; }
+
+  h1.display{
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(52px, 7vw, 92px);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    margin: 6px 0 28px;
+  }
+
+  h2.display{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(32px, 3.6vw, 44px);
+    line-height: 1.12;
+    margin: 0 0 22px;
+  }
+
+  p.lede{
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0 0 18px;
+  }
+
+  .link-arrow{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    margin-top: 4px;
+  }
+
+  /* ---------- reveal-on-scroll ---------- */
+  .reveal{
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in-view{
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
+  /* ---------- badges ---------- */
+  .badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom: 40px;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card-bg);
+  }
+  .badge.shipped{ color: #3f6a3f; }
+  .badge.progress{ color: #a06a24; }
+  .badge .dot{
+    width:7px; height:7px; border-radius:50%;
+    background: var(--green);
+    display:inline-block;
+  }
+  .badge.progress .dot{ background: #d9962c; }
+
+  /* ---------- meta grid ---------- */
+  .meta-panel{
+    background: var(--card-bg-muted);
+    border-radius: var(--radius);
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 60px;
+    margin-top: 44px;
+  }
+  .meta-item .k{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0 0 8px;
+  }
+  .meta-item .v{
+    font-size: 17px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ================= COVER / HERO ================= */
+  .cover{
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 150px 0 100px;
+    overflow: hidden;
+  }
+
+  .topbar{
+    position: fixed;
+    top: 36px;
+    left: 40px;
+    right: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 20;
+    pointer-events: none;
+  }
+  .topbar > *{ pointer-events: auto; }
+  .brand-block{ display:flex; align-items:center; gap: 14px; }
+  .brand-block svg.logo-flower{ width: 44px; height: 44px; flex-shrink:0; }
+  .lg-x{ stroke-width: 3.4; stroke-linecap: round; }
+  .lg-x.ink{ stroke: var(--ink); }
+  .lg-x.wine{ stroke: var(--accent); }
+  .brand-text .b-name{
+    font-family: var(--seasons);
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+  .brand-text .b-role{
+    font-family: var(--rounded-sans);
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 2px 0 0;
+  }
+  .top-icons{ display:flex; gap: 14px; }
+  .top-icons a{
+    width: 36px; height: 36px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius: 8px;
+    background: var(--ink);
+    color: var(--bg);
+    transition: transform .15s ease;
+  }
+  .top-icons a:hover{ transform: translateY(-2px); }
+  .top-icons svg{ width: 17px; height: 17px; }
+
+  .hero-content{
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+  }
+  .greet-word{
+    display:block;
+    font-family: var(--seasons);
+    font-weight: 500;
+    font-size: clamp(34px, 4.6vw, 58px);
+    color: var(--ink);
+    min-height: 1.2em;
+  }
+  .script-name{
+    display:block;
+    font-family: var(--script);
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(64px, 9.5vw, 138px);
+    color: var(--accent);
+    line-height: 1;
+    margin: 6px 0 18px 6vw;
+    white-space: nowrap;
+  }
+  .hero-tagline{
+    font-family: var(--seasons);
+    font-weight: 500;
+    font-size: clamp(17px, 1.5vw, 23px);
+    color: var(--ink-soft);
+    max-width: 40ch;
+    margin: 0;
+  }
+
+  .avatar-drag{
+    position: absolute;
+    top: clamp(120px, 16vw, 190px);
+    right: clamp(180px, 26vw, 410px);
+    width: clamp(96px, 10vw, 150px);
+    z-index: 3;
+    cursor: grab;
+    touch-action: none;
+  }
+  .avatar-drag:active{ cursor: grabbing; }
+  .avatar-frame{
+    width: 100%;
+    aspect-ratio: 1;
+    border: 3px solid var(--ink);
+    background: var(--card-bg);
+    overflow: hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .avatar-frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .avatar-frame .avatar-placeholder{
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-align:center;
+    color: var(--gray);
+    line-height:1.4;
+    padding: 8px;
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    margin: 10px;
+  }
+  .avatar-hint{
+    text-align:center;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 8px;
+  }
+
+  .folder-drag{
+    position: absolute;
+    left: clamp(24px, 6vw, 110px);
+    bottom: clamp(50px, 7vw, 90px);
+    width: clamp(78px, 7.5vw, 108px);
+    z-index: 3;
+    cursor: grab;
+    touch-action: none;
+  }
+  .folder-drag:active{ cursor: grabbing; }
+  .folder-drag img,
+  .folder-drag svg.folder-pixel-icon{ width: 100%; height: auto; display:block; filter: drop-shadow(0 8px 14px rgba(28,27,24,0.14)); }
+  .folder-hint{
+    text-align:center;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 8px;
+  }
+
+  .branch-motif{
+    position: absolute;
+    right: -4%;
+    bottom: -6%;
+    width: 46%;
+    max-width: 560px;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ---------- cross-stitch bloom (bottom-right hero motif) ---------- */
+  .cross-stitch-bloom{
+    position:relative;
+    width:100%;
+    max-width:700px;
+    aspect-ratio: 700 / 760;
+    overflow:hidden;
+  }
+  .bloom-glow{
+    position:absolute;
+    width:46%;
+    aspect-ratio:1;
+    left:26%;
+    top:36%;
+    background: radial-gradient(circle, var(--glow-warm) 0%, rgba(196,120,80,0) 70%);
+    filter: blur(6px);
+    opacity:0;
+    transition: opacity 1.6s var(--ease-bloom) 0.25s;
+    pointer-events:none;
+  }
+  .cross-stitch-bloom.active .bloom-glow{ opacity:0.9; }
+  .stitch-canvas{
+    position:absolute;
+    top:0; left:0;
+    width:700px;
+    height:760px;
+    transform-origin: top left;
+    will-change: transform;
+  }
+  .bloom-stage{
+    position:absolute;
+    inset:0;
+    transform-origin: 91.4% 99.5%;
+    opacity:0;
+    transform: scale(0.88);
+    filter: blur(5px);
+    transition:
+      opacity 1s var(--ease-bloom),
+      transform 1.3s var(--ease-bloom),
+      filter 1.1s var(--ease-bloom);
+  }
+  .cross-stitch-bloom.active .bloom-stage{
+    opacity:1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+  .stitch{
+    position:absolute;
+    width:7px;
+    height:7px;
+    left: calc(var(--x) * 1px);
+    top:  calc(var(--y) * 1px);
+    opacity:0;
+    animation: stitch-grow 820ms var(--ease-bloom) both;
+    animation-delay: var(--delay);
+  }
+  .stitch::before,
+  .stitch::after{
+    content:'';
+    position:absolute;
+    top:50%; left:50%;
+    width:1.6px;
+    height:8.4px;
+    background: currentColor;
+    border-radius:1px;
+  }
+  .stitch::before{ transform: translate(-50%,-50%) rotate(45deg); }
+  .stitch::after{  transform: translate(-50%,-50%) rotate(-45deg); }
+  .stitch.c-dark{      color: var(--stitch-dark); }
+  .stitch.c-dark-soft{ color: var(--stitch-dark-soft); }
+  .stitch.c-red{       color: var(--stitch-red); }
+  .stitch.c-red-light{ color: var(--stitch-red-light); }
+  @keyframes stitch-grow{
+    0%{ opacity:0; transform: scale(0.15) rotate(-14deg); filter: blur(2.5px); }
+    55%{ opacity:1; transform: scale(1.18) rotate(4deg); filter: blur(0.3px); text-shadow: 0 0 6px currentColor; }
+    78%{ transform: scale(0.94) rotate(-1.5deg); text-shadow: 0 0 2px currentColor; }
+    100%{ opacity:1; transform: scale(1) rotate(0deg); filter: blur(0); text-shadow: 0 0 0 transparent; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bloom-stage{ transition: opacity .4s ease; filter:none; transform:none; }
+    .stitch{ animation-duration: 1ms !important; animation-delay: 0ms !important; }
+  }
+
+  @media (max-width: 860px){
+    .topbar{ position: absolute; }
+    .avatar-drag{ display:none; }
+    .branch-motif{ width: 70%; opacity: .6; }
+    .folder-drag{ bottom: 6%; }
+  }
+
+  /* ================= ABOUT ================= */
+  .about{
+    padding: 120px 0;
+    border-top: 1px solid var(--line);
+  }
+  .about-grid{
+    display: grid;
+    grid-template-columns: minmax(320px, 520px) 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* ---------- Finder-style photo browser ---------- */
+  .finder-window{
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    overflow: hidden;
+    box-shadow: 0 26px 50px rgba(28,27,24,0.14);
+  }
+  .finder-titlebar{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    padding: 10px 14px;
+    background: #eeede9;
+    border-bottom: 1px solid var(--line);
+  }
+  .finder-dots{ display:flex; gap:7px; }
+  .finder-dots span{ width:11px; height:11px; border-radius:50%; flex-shrink:0; }
+  .finder-dots .fd-red{ background:#ec6a5e; }
+  .finder-dots .fd-yellow{ background:#f4bf4f; }
+  .finder-dots .fd-green{ background:#61c454; }
+  .finder-titlebar svg.fd-icon{ width:15px; height:15px; color:#8f8b83; flex-shrink:0; }
+  .finder-title{
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 13px;
+    color: #6b675f;
+    flex: 1;
+  }
+  .finder-actions{ display:flex; gap:14px; }
+
+  .finder-body{ display:flex; background: var(--card-bg); }
+  .finder-strip{
+    width: 150px;
+    flex-shrink: 0;
+    background: #eeede9;
+    border-right: 1px solid var(--line);
+    padding: 14px 10px;
+    display:flex;
+    flex-direction:column;
+    gap: 16px;
+  }
+  .finder-thumb{ text-align:center; }
+  .finder-thumb .thumb-frame{
+    width:100%;
+    aspect-ratio: 1;
+    border-radius: 3px;
+    overflow:hidden;
+    background: var(--card-bg-muted);
+    border: 1px solid transparent;
+  }
+  .finder-thumb.active .thumb-frame{ border-color: var(--accent); }
+  .finder-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .finder-thumb p{
+    font-family: var(--sans);
+    font-size: 11px;
+    color: #7a766d;
+    margin: 6px 0 0;
+  }
+  .finder-preview{
+    flex: 1;
+    min-height: 480px;
+    background: var(--card-bg);
+    overflow:hidden;
+  }
+  .finder-preview img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  @media (max-width: 860px){
+    .finder-strip{ width: 108px; }
+    .finder-preview{ min-height: 320px; }
+  }
+
+  .about-script{
+    font-family: var(--script);
+    font-weight: 700;
+    font-size: clamp(44px, 5.4vw, 76px);
+    color: var(--ink);
+    line-height: 1;
+    margin: 0 0 26px;
+  }
+  .about-body h2.display{ margin-bottom: 20px; }
+  .about .meta-panel{
+    padding: 34px 36px;
+    gap: 28px 48px;
+    margin: 36px 0 32px;
+  }
+  .about .meta-item .v{ font-size: 16px; }
+  .skills-label{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0 0 14px;
+  }
+  .badge-row{ display: flex; flex-wrap: wrap; gap: 10px; }
+
+  /* ================= MANIFESTO ================= */
+  .manifesto{
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 40px;
+    border-top: 1px solid var(--line);
+  }
+  .manifesto .eyebrow{ text-align: center; }
+  .manifesto p.statement{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(30px, 4.6vw, 56px);
+    line-height: 1.22;
+    max-width: 18ch;
+    margin: 0 0 26px;
+  }
+  .manifesto .statement .accent-word{ color: var(--accent); }
+  .manifesto p.sub{
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0;
+  }
+
+  /* ================= CASE STUDY LAYOUT ================= */
+  .page{
+    display:grid;
+    grid-template-columns: 260px minmax(0,1fr);
+    gap: 40px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 56px 40px 140px;
+    border-top: 1px solid var(--line);
+  }
+
+  .sidebar{
+    position: sticky;
+    top: 112px;
+    align-self: start;
+    height: fit-content;
+  }
+
+  .top-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 9px 20px 9px 16px;
+    cursor: pointer;
+    margin-bottom: 36px;
+  }
+  .top-btn:hover{ border-color: var(--ink-soft); }
+
+  .toc{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .toc a{
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray);
+    transition: color .15s ease;
+  }
+  .toc a:hover{ color: var(--ink); }
+  .toc a.active{ color: var(--accent); font-weight: 500; }
+
+  main{ min-width: 0; }
+
+  .page section{
+    padding-top: 90px;
+    margin-top: -90px;
+  }
+  .page section + section{ margin-top: 0; }
+
+  .hover-hint{
+    display:block;
+    text-align:right;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0 0 16px;
+  }
+
+  /* ---------- hero product preview + annotation callouts ---------- */
+  .hero-visual{
+    position: relative;
+    margin: 0 60px 70px 0;
+  }
+  .collage{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9.4;
+  }
+  .collage img{
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 20px 44px rgba(28,27,24,0.16);
+    background: var(--card-bg-muted);
+  }
+  /* image 1 — main hero shot, largest, sits furthest back */
+  .collage .pic-1{
+    top: 0;
+    left: 0;
+    width: 66%;
+    height: 62%;
+    z-index: 1;
+  }
+  /* image 3 — plans/pricing shot, upper right, middle layer */
+  .collage .pic-3{
+    top: 6%;
+    left: 55%;
+    width: 42%;
+    height: 34%;
+    z-index: 2;
+  }
+  /* image 2 — bottom shot, front-most, overlaps both */
+  .collage .pic-2{
+    top: 48%;
+    left: 46%;
+    width: 42%;
+    height: 46%;
+    z-index: 3;
+  }
+
+  @media (max-width: 860px){
+    .hero-visual{ margin-right: 0; }
+    .collage{
+      aspect-ratio: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .collage img{
+      position: static;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16/10;
+    }
+  }
+
+  .callout-card{
+    position: absolute;
+    width: min(320px, 78%);
+    background: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(28,27,24,0.14);
+    overflow: hidden;
+    font-family: var(--sans);
+  }
+  .callout-head{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .callout-card.before .callout-head{ background: #fbeedd; color:#a06a24; }
+  .callout-card.after .callout-head{ background: #3f6a4c; color:#fff; }
+  .callout-body{ padding: 14px 16px 16px; }
+  .callout-body p{
+    margin:0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .callout-card.before{
+    top: -18px;
+    left: 32px;
+    z-index: 10;
+  }
+  .callout-card.after{
+    bottom: 8%;
+    right: -44px;
+    z-index: 10;
+  }
+
+  @media (max-width: 860px){
+    .callout-card{ position: static; width: 100%; margin-bottom: 14px; box-shadow:none; border:1px solid var(--line); }
+    .callout-card.after{ margin-top: 14px; margin-bottom: 0; }
+  }
+
+  /* ---------- problem cards ---------- */
+  .card-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-bottom: 70px;
+  }
+  .num-card{
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 26px 28px;
+    cursor: default;
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+  }
+  .num-card:hover{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+    transform: translateY(-2px);
+  }
+  .num-card .badge-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--card-bg-muted);
+    font-family: var(--mono);
+    font-size: 13px;
+    margin-bottom: 16px;
+    transition: background .18s ease, color .18s ease;
+  }
+  .num-card:hover .badge-num{
+    background: var(--accent);
+    color: #fff;
+  }
+  .num-card h3{
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 17px;
+    margin: 0 0 8px;
+  }
+  .num-card p{
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ---------- user pattern panel ---------- */
+  .pattern-panel{
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 10px 40px;
+    margin-bottom: 70px;
+  }
+  .pattern-row{
+    display:flex;
+    gap: 22px;
+    align-items: flex-start;
+    padding: 30px 0;
+  }
+  .pattern-row + .pattern-row{ border-top: 1px solid var(--line); }
+  .pattern-icon{
+    width: 22px; height: 22px;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .pattern-row h4{
+    display:inline-flex;
+    align-items:center;
+    gap: 12px;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0 0 8px;
+  }
+  .tag-pill{
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-weight: 400;
+  }
+  .tag-pill.deep{ background:#e7f1e7; color:#3f6a3f; }
+  .tag-pill.surface{ background:#fbeedd; color:#a06a24; }
+  .pattern-row p{
+    margin:0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 60ch;
+  }
+
+  /* ---------- numbered process / reflection items ---------- */
+  .process-step, .reflection-item{
+    display:grid;
+    grid-template-columns: 70px 1fr;
+    gap: 24px;
+  }
+  .process-step{ margin-bottom: 44px; }
+  .reflection-item{ padding: 30px 0; }
+  .reflection-item + .reflection-item{ border-top: 1px solid var(--line); }
+  .process-step .step-num, .reflection-item .step-num{
+    font-family: var(--serif);
+    font-size: 34px;
+    color: var(--gray);
+    font-weight: 400;
+  }
+  .process-step h3, .reflection-item h3{
+    font-size: 20px;
+    font-weight: 700;
+    margin: 2px 0 12px;
+  }
+  .process-step p, .reflection-item p{
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 68ch;
+  }
+
+  /* ---------- final product cards ---------- */
+  .product-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+  .product-card{
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .product-card .thumb{
+    height: 120px;
+    background: var(--card-bg-muted);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .product-card .thumb svg{ width: 34px; height: 34px; color: var(--gray); }
+  .product-card .body{ padding: 22px 22px 26px; }
+  .product-card h3{
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  .product-card p{
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .design-note{
+    display:flex;
+    align-items:center;
+    gap: 16px;
+    background: var(--card-bg-muted);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    margin-top: 6px;
+  }
+  .design-note svg{ width: 26px; height:26px; color: var(--accent); flex-shrink:0; }
+  .design-note h4{ font-size: 15px; font-weight: 600; margin: 0 0 3px; }
+  .design-note p{ font-size: 14px; color: var(--ink-soft); margin: 0; }
+
+  @media (max-width: 860px){
+    .wrap{ padding: 0 22px; }
+    .cover{ padding: 110px 0 80px; }
+    .scroll-cue{ left: 22px; }
+    .about-grid{ grid-template-columns: 1fr; gap: 32px; }
+    .finder-window{ max-width: 420px; }
+    .about .meta-panel{ grid-template-columns: 1fr; padding: 26px; }
+
+    .page{ grid-template-columns: 1fr; padding: 32px 22px 100px; }
+    .sidebar{ position: static; display:flex; flex-direction:column; }
+    .toc{ flex-direction: column; gap: 24px; }
+    .toc a{ font-size: 15px; }
+    .top-btn{ font-size: 16px; padding: 12px 26px 12px 20px; }
+    .meta-panel{ grid-template-columns: 1fr; padding: 28px; }
+    .card-grid{ grid-template-columns: 1fr; }
+    .product-grid{ grid-template-columns: 1fr; }
+    .process-step, .reflection-item{ grid-template-columns: 44px 1fr; gap: 16px; }
+    .sunflower-motif{ width: 160px; height: 160px; }
+  }
+
+  /* ================= CLOSING SUNFLOWER ================= */
+  .sunflower-close{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 60px 0 100px;
+    border-top: 1px solid var(--line);
+  }
+  .sunflower-motif{ width: 220px; height: 220px; }
+  .sunflower-note{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0;
+  }
+</style>
+</head>
+<body id="top">
+
+  <!-- ================= PERSISTENT TOP BAR ================= -->
+  <div class="topbar">
+    <div class="brand-block">
+      <svg class="logo-flower" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="lg-x ink" d="M66.5 56.5 L73.5 63.5 M73.5 56.5 L66.5 63.5"/>
+        <path class="lg-x wine" d="M73.8 64.7 L80.1 71.0 M80.1 64.7 L73.8 71.0"/>
+        <path class="lg-x wine" d="M82.0 68.7 L87.6 74.2 M87.6 68.7 L82.0 74.2"/>
+        <path class="lg-x ink" d="M93.6 57.6 L98.4 62.4 M98.4 57.6 L93.6 62.4"/>
+        <path class="lg-x ink" d="M61.5 65.2 L68.5 72.2 M68.5 65.2 L61.5 72.2"/>
+        <path class="lg-x ink" d="M58.6 75.5 L64.8 81.7 M64.8 75.5 L58.6 81.7"/>
+        <path class="lg-x ink" d="M59.7 84.5 L65.2 90.0 M65.2 84.5 L59.7 90.0"/>
+        <path class="lg-x ink" d="M75.6 88.8 L80.4 93.6 M80.4 88.8 L75.6 93.6"/>
+        <path class="lg-x ink" d="M51.5 65.2 L58.5 72.2 M58.5 65.2 L51.5 72.2"/>
+        <path class="lg-x wine" d="M41.6 67.6 L47.9 73.9 M47.9 67.6 L41.6 73.9"/>
+        <path class="lg-x wine" d="M34.9 73.0 L40.4 78.5 M40.4 73.0 L34.9 78.5"/>
+        <path class="lg-x ink" d="M39.6 88.8 L44.4 93.6 M44.4 88.8 L39.6 93.6"/>
+        <path class="lg-x ink" d="M46.5 56.5 L53.5 63.5 M53.5 56.5 L46.5 63.5"/>
+        <path class="lg-x ink" d="M39.9 49.0 L46.2 55.3 M46.2 49.0 L39.9 55.3"/>
+        <path class="lg-x ink" d="M32.4 45.8 L38.0 51.3 M38.0 45.8 L32.4 51.3"/>
+        <path class="lg-x ink" d="M21.6 57.6 L26.4 62.4 M26.4 57.6 L21.6 62.4"/>
+        <path class="lg-x ink" d="M51.5 47.8 L58.5 54.8 M58.5 47.8 L51.5 54.8"/>
+        <path class="lg-x wine" d="M55.2 38.3 L61.4 44.5 M61.4 38.3 L55.2 44.5"/>
+        <path class="lg-x wine" d="M54.8 30.0 L60.3 35.5 M60.3 30.0 L54.8 35.5"/>
+        <path class="lg-x ink" d="M39.6 26.4 L44.4 31.2 M44.4 26.4 L39.6 31.2"/>
+        <path class="lg-x ink" d="M61.5 47.8 L68.5 54.8 M68.5 47.8 L61.5 54.8"/>
+        <path class="lg-x ink" d="M72.1 46.1 L78.4 52.4 M78.4 46.1 L72.1 52.4"/>
+        <path class="lg-x ink" d="M79.6 41.5 L85.1 47.0 M85.1 41.5 L79.6 47.0"/>
+        <path class="lg-x ink" d="M75.6 26.4 L80.4 31.2 M80.4 26.4 L75.6 31.2"/>
+        <path class="lg-x ink" d="M57.0 57.0 L63.0 63.0 M63.0 57.0 L57.0 63.0"/>
+        <path class="lg-x ink" d="M61.0 55.0 L67.0 61.0 M67.0 55.0 L61.0 61.0"/>
+        <path class="lg-x wine" d="M53.0 59.0 L59.0 65.0 M59.0 59.0 L53.0 65.0"/>
+        <path class="lg-x ink" d="M59.0 61.0 L65.0 67.0 M65.0 61.0 L59.0 67.0"/>
+        <path class="lg-x wine" d="M55.0 53.0 L61.0 59.0 M61.0 53.0 L55.0 59.0"/>
+      </svg>
+      <div class="brand-text">
+        <p class="b-name">Nikita Joisa</p>
+        <p class="b-role">Web/UX Designer</p>
+      </div>
+    </div>
+    <div class="top-icons">
+      <a href="#" aria-label="LinkedIn" title="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3-.02-2.96-1.8-2.96-1.8 0-2.08 1.4-2.08 2.86V21H9z"/></svg>
+      </a>
+      <a href="#" aria-label="Email" title="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+      </a>
+      <a href="#" aria-label="Resume" title="Resume">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ================= COVER / HERO ================= -->
+  <section class="cover wrap">
+
+    <div class="hero-content">
+      <span class="greet-word reveal" id="greetWord">Namaste,</span>
+      <span class="script-name reveal">I'm Nikita</span>
+      <p class="hero-tagline reveal">I love designing technology that feels deeply human.</p>
+    </div>
+
+    <div class="avatar-drag" id="avatarDrag">
+      <div class="avatar-frame">
+        <img src="../Images/Retrato%20pixel.jpeg" alt="Pixel-art avatar of Nikita Joisa">
+      </div>
+      <p class="avatar-hint">Click — About Me</p>
+    </div>
+
+    <div class="folder-drag" id="folderDrag">
+      <svg class="folder-pixel-icon" viewBox="0 0 100 76" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <pattern id="folderHatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="6" height="6" fill="#e3d873"/>
+            <line x1="0" y1="0" x2="0" y2="6" stroke="#c9bd55" stroke-width="2"/>
+          </pattern>
+        </defs>
+        <polygon points="6,20 40,20 46,10 94,10 94,66 6,66" fill="url(#folderHatch)" stroke="#1c1b18" stroke-width="3" stroke-linejoin="round"/>
+        <polygon points="2,30 90,30 84,72 8,72" fill="#f2e9a0" stroke="#1c1b18" stroke-width="3" stroke-linejoin="round"/>
+      </svg>
+      <p class="folder-hint">Click — One Project</p>
+    </div>
+
+    <div class="branch-motif" aria-hidden="true">
+      <div class="cross-stitch-bloom" id="bloom">
+        <div class="bloom-glow"></div>
+        <div class="bloom-stage">
+          <div class="stitch-canvas" id="canvas"></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="about wrap" id="about">
+
+    <div class="about-grid">
+      <div class="finder-window reveal">
+        <div class="finder-titlebar">
+          <div class="finder-dots">
+            <span class="fd-red"></span><span class="fd-yellow"></span><span class="fd-green"></span>
+          </div>
+          <svg class="fd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+          <p class="finder-title">17V28 (4 images)</p>
+          <div class="finder-actions">
+            <svg class="fd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+            <svg class="fd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M8 10.5h5M16 16l4 4"/></svg>
+            <svg class="fd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M10.5 8v5M8 10.5h5M16 16l4 4"/></svg>
+          </div>
+        </div>
+        <div class="finder-body">
+          <div class="finder-strip">
+            <div class="finder-thumb">
+              <div class="thumb-frame"><img src="images/about-01.jpg" alt="Photo 01"></div>
+              <p>01.jpg</p>
+            </div>
+            <div class="finder-thumb">
+              <div class="thumb-frame"><img src="images/about-02.jpg" alt="Photo 02"></div>
+              <p>02.jpg</p>
+            </div>
+            <div class="finder-thumb active">
+              <div class="thumb-frame"><img src="images/about-03.jpg" alt="Photo 03"></div>
+              <p>03.jpg</p>
+            </div>
+          </div>
+          <div class="finder-preview">
+            <img src="images/about-04.jpg" alt="Nikita Joisa outdoors">
+          </div>
+        </div>
+      </div>
+
+      <div class="about-body">
+        <h2 class="about-script reveal">About Me</h2>
+        <p class="lede reveal">I'm a Web and UX Designer who enjoys creating digital experiences that are both visually engaging and intuitive. I love solving problems where aesthetics meet functionality, designing interfaces that not only look good but also help people achieve their goals with ease.</p>
+        <p class="lede reveal">What draws me to design is understanding people, their needs, behaviours, and frustrations and turning those insights into thoughtful experiences. Guided by empathy, curiosity, and continuous refinement, I create responsive websites, improve user journeys, and prototype ideas that are accessible, meaningful, and intuitive. I believe the best experiences are created when technology feels less like a tool and more like something people can naturally connect with.</p>
+
+        <div class="meta-panel reveal">
+          <div class="meta-item">
+            <p class="k">Based</p>
+            <p class="v">Cork, Ireland — roots in Bengaluru</p>
+          </div>
+          <div class="meta-item">
+            <p class="k">Currently</p>
+            <p class="v">Web Developer &amp; Receptionist, LeisureWorld Cork</p>
+          </div>
+          <div class="meta-item">
+            <p class="k">Education</p>
+            <p class="v">BE Information Science; MSc Business Analytics, UCC</p>
+          </div>
+          <div class="meta-item">
+            <p class="k">Focus</p>
+            <p class="v">UX/UI Design &amp; Full-Stack Development</p>
+          </div>
+        </div>
+
+        <p class="skills-label reveal">Skills &amp; Tools</p>
+        <div class="badge-row reveal">
+          <span class="badge">Figma</span>
+          <span class="badge">User Research</span>
+          <span class="badge">Prototyping</span>
+          <span class="badge">HTML / CSS / JS</span>
+          <span class="badge">PHP</span>
+          <span class="badge">Bootstrap</span>
+          <span class="badge">Python</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MANIFESTO ================= -->
+  <section class="manifesto" id="manifesto">
+    <p class="eyebrow reveal">Why one case study</p>
+    <p class="statement reveal">One live, ongoing project, shown <span class="accent-word">deeply</span>, beats five shown shallow.</p>
+    <p class="sub reveal">This is that project ↓</p>
+  </section>
+
+  <!-- ================= CASE STUDY ================= -->
+  <div class="page">
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar">
+      <a class="top-btn" href="#top">
+        <span>&#8593;</span> Top
+      </a>
+
+      <nav>
+        <ul class="toc">
+          <li><a href="#tldr" class="nav-link">TL;DR</a></li>
+          <li><a href="#background" class="nav-link">Background</a></li>
+          <li><a href="#problem" class="nav-link">Problem</a></li>
+          <li><a href="#process" class="nav-link">Process</a></li>
+          <li><a href="#final-product" class="nav-link">Final Product</a></li>
+          <li><a href="#impact" class="nav-link">Impact</a></li>
+          <li><a href="#reflections" class="nav-link">Reflections</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main>
+
+      <!-- ---------- TL;DR / HERO ---------- -->
+      <section id="tldr">
+
+        <div class="hero-visual reveal">
+          <div class="callout-card before">
+            <div class="callout-head">
+              <span>Before</span>
+              <span>Old Site</span>
+            </div>
+            <div class="callout-body">
+              <p>Swim School buried three levels deep in the nav, split across four unlinked pages.</p>
+            </div>
+          </div>
+
+          <div class="collage">
+            <img class="pic-1" src="../Images/1.png" alt="LWv4 homepage hero — Every Body Belongs">
+            <img class="pic-3" src="../Images/3.png" alt="LWv4 membership plans page">
+            <img class="pic-2" src="../Images/2.png" alt="LWv4 Water Safety and Fun programme page">
+          </div>
+
+          <div class="callout-card after">
+            <div class="callout-head">
+              <span>After</span>
+              <span>Redesigned</span>
+            </div>
+            <div class="callout-body">
+              <p>Swim School promoted to a top-level nav item with its own dedicated, single-scroll page.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="eyebrow eyebrow-icon reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="1.4" fill="currentColor" stroke="none"/></svg>
+          LeisureWorld Cork
+        </p>
+
+        <h1 class="display reveal">LWv4</h1>
+
+        <div class="badges reveal">
+          <span class="badge progress"><span class="dot"></span>In Progress</span>
+          <span class="badge">Full-Stack Rebuild</span>
+          <span class="badge">Responsive</span>
+          <span class="badge">Consumer Web</span>
+        </div>
+
+        <p class="eyebrow">TL;DR</p>
+        <p class="lede reveal">LeisureWorld Cork is a health, fitness, and recreation provider operating three centres across Cork. As a self-initiated UI/UX case study, I evaluated the existing website to identify usability issues and user pain points affecting key user journeys.</p>
+        <p class="lede reveal">Using a user-centred design process, I redesigned the experience with improved navigation, information architecture, and accessibility before developing the solution as a fully custom, responsive website using HTML, CSS, JavaScript, PHP, and Bootstrap.</p>
+        <a class="link-arrow" href="#">See the GitHub repo &#8594;</a>
+
+        <div class="meta-panel reveal">
+          <div class="meta-item">
+            <p class="k">Role</p>
+            <p class="v">UX/UI Designer &amp; Front-End Developer (Self-initiated case study)</p>
+          </div>
+          <div class="meta-item">
+            <p class="k">Timeline</p>
+            <p class="v">December 2025 – Present</p>
+          </div>
+          <div class="meta-item">
+            <p class="k">Collaboration</p>
+            <p class="v">Solo project with stakeholder feedback from the CEO, Marketing Manager, and Operations Manager</p>
+          </div>
+          <div class="meta-item">
+            <p class="k">Methods &amp; Tools</p>
+            <p class="v">User Research, Information Architecture, Wireframing, Prototyping, Usability Testing, Figma, HTML, CSS, JavaScript, PHP, Bootstrap</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- BACKGROUND ---------- -->
+      <section id="background">
+        <p class="eyebrow">Background</p>
+        <h2 class="display reveal">An outdated experience that created unnecessary friction</h2>
+        <p class="lede reveal">The existing LeisureWorld Cork website no longer met users' expectations. Its maze-like navigation, cluttered information architecture, and inconsistent content made it difficult for visitors to locate essential information, creating frustration and reducing the overall usability of the site.</p>
+      </section>
+
+      <!-- ---------- PROBLEM ---------- -->
+      <section id="problem">
+        <p class="eyebrow">Problem</p>
+        <h2 class="display reveal">Four key usability issues identified through stakeholder interviews</h2>
+        <p class="lede reveal">To understand the existing experience, I conducted interviews with customers, front-line staff, and back-office stakeholders. These conversations revealed four recurring usability issues that affected both users and the organisation.</p>
+
+        <span class="hover-hint">Hover cards to explore</span>
+
+        <div class="card-grid reveal">
+          <div class="num-card">
+            <span class="badge-num">1</span>
+            <h3>Maze-like navigation</h3>
+            <p>Users found it difficult to navigate the website and locate key services due to a confusing information architecture.</p>
+          </div>
+          <div class="num-card">
+            <span class="badge-num">2</span>
+            <h3>Disruptive pop-ups</h3>
+            <p>Frequent and unnecessary pop-ups interrupted users' journeys, creating friction and reducing engagement.</p>
+          </div>
+          <div class="num-card">
+            <span class="badge-num">3</span>
+            <h3>Poor visibility of core services</h3>
+            <p>Participants consistently highlighted that the Swim School — LeisureWorld's core service — was difficult to find and lacked clear, comprehensive information.</p>
+          </div>
+          <div class="num-card">
+            <span class="badge-num">4</span>
+            <h3>Duplicate and inconsistent content</h3>
+            <p>Staff explained that similar information existed across multiple pages, making content difficult to maintain and leading to outdated or conflicting information being shown to users.</p>
+          </div>
+        </div>
+
+        <p class="lede">The redesign had one guiding constraint: improve usability by simplifying navigation and content without removing the information users and staff depend on.</p>
+
+        <p class="eyebrow" style="margin-top:44px;color:var(--gray);">User Patterns</p>
+        <div class="pattern-panel reveal">
+          <div class="pattern-row">
+            <svg class="pattern-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/></svg>
+            <div>
+              <h4>Members &amp; Visitors <span class="tag-pill deep">Task-focused engagement</span></h4>
+              <p>Users visit the website to quickly find information about memberships, swimming lessons, fitness classes, timetables, or facility bookings. They expect clear navigation and fast access to relevant information.</p>
+            </div>
+          </div>
+          <div class="pattern-row">
+            <svg class="pattern-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5c3-1.4 6-1.4 8 0v14c-2-1.4-5-1.4-8 0V5z"/><path d="M20 5c-3-1.4-6-1.4-8 0v14c2-1.4 5-1.4 8 0V5z"/></svg>
+            <div>
+              <h4>Parents &amp; Families <span class="tag-pill surface">Information-focused engagement</span></h4>
+              <p>Parents primarily look for details about the Swim School, children's camps, and birthday parties. They need comprehensive, easy-to-find information, including schedules, pricing, enrolment, and FAQs, to make informed decisions.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- PROCESS ---------- -->
+      <section id="process">
+        <p class="eyebrow">Process</p>
+        <h2 class="display reveal">From research to a user-centred redesign</h2>
+
+        <div class="process-step reveal">
+          <span class="step-num">01</span>
+          <div>
+            <h3>Restructuring the information architecture</h3>
+            <p>Research revealed that users struggled to navigate the website due to a maze-like structure and duplicated content. I reorganised the information architecture by simplifying navigation, consolidating duplicate pages, and creating a clearer content hierarchy, making it easier for users to find key services.</p>
+          </div>
+        </div>
+
+        <div class="process-step reveal">
+          <span class="step-num">02</span>
+          <div>
+            <h3>Prioritising core user journeys</h3>
+            <p>Interview findings showed that users had difficulty locating important services, particularly the Swim School. I redesigned the homepage and navigation to prioritise high-demand services, reduce unnecessary pop-ups, and improve the visibility of key information, resulting in a more intuitive and efficient user experience.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- FINAL PRODUCT ---------- -->
+      <section id="final-product">
+        <p class="eyebrow">Final Product</p>
+        <h2 class="display reveal">A redesign built around what users actually need</h2>
+
+        <div class="product-grid reveal">
+          <div class="product-card">
+            <div class="thumb">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
+            </div>
+            <div class="body">
+              <h3>Homepage</h3>
+              <p>User goals became the primary focus, reducing clutter and improving content hierarchy. Each section highlights essential information, guiding users towards key services and actions. The rebuild also creates a consistent experience across the wider site.</p>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="thumb">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c3-4 6-6 10-6s7 2 10 6c-3 4-6 6-10 6s-7-2-10-6z"/><circle cx="12" cy="12" r="2.4"/></svg>
+            </div>
+            <div class="body">
+              <h3>Swim School</h3>
+              <p>Programmes became the primary content structure, replacing one long information-heavy page. Each pathway now has its own dedicated page with clear levels, goals, and progression details. The rebuild improves wayfinding by allowing users to explore the programme most relevant to them without unnecessary scrolling.</p>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="thumb">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h6M9 16h6M9 8h3"/></svg>
+            </div>
+            <div class="body">
+              <h3>Centre Policies</h3>
+              <p>Policies became organised categories rather than a flat document list. Each card provides essential context before users open a policy, improving scanability and reducing search effort. The rebuild replaces static PDFs with structured, responsive pages that are easier to navigate, read, and maintain.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="design-note reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          <div>
+            <h4>Design system</h4>
+            <p>Built for consistency across pages, clean handoff, and future iteration.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- IMPACT ---------- -->
+      <section id="impact">
+        <p class="eyebrow">Impact</p>
+        <h2 class="display reveal">Rebuild in progress</h2>
+        <p class="lede reveal">The proposed redesign was validated with key stakeholders, who supported the new structure and are working towards an MVP launch. The rebuild focuses on improving discoverability, reducing user friction, and creating a more scalable foundation for future updates.</p>
+        <p class="lede reveal">I led the UX and development process end-to-end, translating research findings into a redesigned digital experience currently being prepared for release.</p>
+      </section>
+
+      <!-- ---------- REFLECTIONS ---------- -->
+      <section id="reflections">
+        <p class="eyebrow">Reflections</p>
+        <h2 class="display reveal">What this project reinforced</h2>
+
+        <div class="reflection-item reveal">
+          <span class="step-num">01</span>
+          <div>
+            <h3>Designing around real user needs, not assumptions</h3>
+            <p>This project reinforced the importance of understanding how different users interact with a service. Speaking with customers, staff, and stakeholders highlighted that usability issues were often connected to wider organisational challenges, such as duplicated content, unclear ownership, and outdated structures. Research helped shift the focus from simply redesigning screens to improving the overall user journey.</p>
+          </div>
+        </div>
+
+        <div class="reflection-item reveal">
+          <span class="step-num">02</span>
+          <div>
+            <h3>Simplifying without losing important information</h3>
+            <p>A key challenge was balancing simplicity with the amount of information LeisureWorld needs to provide. The goal was not to remove content, but to restructure it so users could find relevant information more easily. This reinforced the importance of information architecture as a foundation for good UX.</p>
+          </div>
+        </div>
+
+        <div class="reflection-item reveal">
+          <span class="step-num">03</span>
+          <div>
+            <h3>The importance of validation before launch</h3>
+            <p>While stakeholder feedback confirmed the direction of the redesign, further validation with real customers will be essential before the final launch. Usability testing with members, parents, and visitors would help identify any remaining friction points and ensure the new experience supports real user goals.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================= CLOSING SUNFLOWER ================= -->
+  <footer class="sunflower-close">
+    <img class="sunflower-motif reveal" src="images/sunflower.png" alt="Pixel cross-stitch sunflower">
+    <p class="sunflower-note">Made with care — Nikita Joisa</p>
+  </footer>
+
+<script>
+  // Reveal-on-scroll for both the intro pages and the case study
+  const revealItems = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if(entry.isIntersecting){
+        setTimeout(() => entry.target.classList.add('in-view'), (i % 6) * 60);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealItems.forEach(el => revealObserver.observe(el));
+
+  // Scrollspy: highlight the active sidebar link based on scroll position
+  const navLinks = document.querySelectorAll('.nav-link');
+  const navSections = [...navLinks].map(link => document.querySelector(link.getAttribute('href')));
+
+  function onScroll(){
+    let current = null;
+    const scrollPos = window.scrollY + 140;
+    navSections.forEach(sec => {
+      if(sec && sec.offsetTop <= scrollPos) current = sec;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', current && link.getAttribute('href') === '#' + current.id);
+    });
+  }
+  document.addEventListener('scroll', onScroll);
+  onScroll();
+
+  // Cross-stitch bloom — chrysanthemum, stems, leaves, generated with a
+  // seeded RNG so the pattern is stable across reloads. Blooms outward
+  // from the stem root on load, staggered by distance from that root.
+  (function(){
+    "use strict";
+    const bloomRoot = document.getElementById('bloom');
+    const canvas = document.getElementById('canvas');
+    if(!bloomRoot || !canvas) return;
+
+    const DW = 700, DH = 760;
+    const GRID = 7;
+    const ROOT = { x: 640, y: 756 };
+
+    function mulberry32(seed){
+      return function(){
+        seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+    const rnd = mulberry32(42);
+
+    const stitches = new Map();
+    function put(x, y, color){
+      const col = Math.round(x / GRID);
+      const row = Math.round(y / GRID);
+      if (col < 0 || row < 0 || col > DW / GRID || row > DH / GRID) return;
+      stitches.set(col + ',' + row, { x: col * GRID, y: row * GRID, color });
+    }
+
+    function bezier(p0, p1, p2, p3, t){
+      const mt = 1 - t;
+      return [
+        mt*mt*mt*p0[0] + 3*mt*mt*t*p1[0] + 3*mt*t*t*p2[0] + t*t*t*p3[0],
+        mt*mt*mt*p0[1] + 3*mt*mt*t*p1[1] + 3*mt*t*t*p2[1] + t*t*t*p3[1]
+      ];
+    }
+
+    function makeStem(p0, p1, p2, p3, steps){
+      const pts = [];
+      for (let i = 0; i <= steps; i++){
+        const t = i / steps;
+        const [x, y] = bezier(p0, p1, p2, p3, t);
+        pts.push([x, y]);
+        put(x, y, 'dark');
+        if (rnd() < 0.22) put(x + GRID, y, 'dark');
+      }
+      return pts;
+    }
+
+    function makeBranch(x0, y0, x1, y1){
+      const steps = Math.max(1, Math.round(Math.hypot(x1 - x0, y1 - y0) / GRID));
+      for (let i = 0; i <= steps; i++){
+        const t = i / steps;
+        put(x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, 'dark');
+      }
+    }
+
+    function makePetalShape(cx, cy, angle, length, maxWidth, colorStart, tipColor, baseColor){
+      const steps = Math.max(6, Math.round(length / 4.5));
+      for (let s = 0; s <= steps; s++){
+        const t = s / steps;
+        const along = t * length;
+        const w = maxWidth * Math.pow(1 - t, 0.62);
+        const lateral = Math.max(0, Math.round(w / 6));
+        for (let p = -lateral; p <= lateral; p++){
+          const px = along, py = p * 6;
+          const x = cx + px * Math.cos(angle) - py * Math.sin(angle);
+          const y = cy + px * Math.sin(angle) + py * Math.cos(angle);
+          let color;
+          if (t > colorStart){
+            color = rnd() < 0.85 ? tipColor : (tipColor === 'red' ? 'red-light' : 'dark-soft');
+          } else {
+            color = rnd() < 0.2 ? tipColor : baseColor;
+          }
+          put(x, y, color);
+        }
+      }
+    }
+
+    function makeFlower(cx, cy, outerR, innerR, petals){
+      const outerCount = petals;
+      const innerCount = Math.round(petals * 0.85);
+      for (let i = 0; i < outerCount; i++){
+        const angle = (i / outerCount) * Math.PI * 2 + (rnd() - 0.5) * 0.12;
+        const len = outerR * (0.82 + rnd() * 0.24);
+        const width = outerR * (0.30 + rnd() * 0.08);
+        makePetalShape(cx, cy, angle, len, width, 0.4, 'red', 'dark');
+      }
+      for (let i = 0; i < innerCount; i++){
+        const angle = (i / innerCount) * Math.PI * 2 + Math.PI / innerCount + (rnd() - 0.5) * 0.1;
+        const len = outerR * (0.5 + rnd() * 0.18);
+        const width = outerR * (0.24 + rnd() * 0.06);
+        makePetalShape(cx, cy, angle, len, width, 0.55, 'red', 'dark');
+      }
+      for (let gx = -innerR; gx <= innerR; gx += 6){
+        for (let gy = -innerR; gy <= innerR; gy += 6){
+          const r = Math.hypot(gx, gy);
+          if (r <= innerR * 0.85 && rnd() < 0.94){
+            const weave = (Math.round((cx+gx)/GRID) + Math.round((cy+gy)/GRID)) % 3;
+            const color = weave === 0 ? 'red' : (weave === 1 ? 'dark' : 'red-light');
+            put(cx + gx, cy + gy, color);
+          }
+        }
+      }
+    }
+
+    function makeLeafCluster(cx, cy, baseAngle, spread, count, length, width){
+      for (let i = 0; i < count; i++){
+        const frac = count === 1 ? 0.5 : i / (count - 1);
+        const ang = baseAngle - spread / 2 + spread * frac;
+        const edgeFalloff = 1 - Math.abs(frac - 0.5) * 0.5;
+        const len = length * edgeFalloff * (0.85 + rnd() * 0.25);
+        const w = width * (0.8 + rnd() * 0.3);
+        const tipColor = rnd() < 0.16 ? 'red' : 'dark';
+        makePetalShape(cx, cy, ang, len, w, 0.82, tipColor, 'dark');
+      }
+    }
+
+    function makeBlob(cx, cy, r, redBias){
+      for (let gx = -r; gx <= r; gx += 6){
+        for (let gy = -r; gy <= r; gy += 6){
+          if (Math.hypot(gx, gy) <= r && rnd() < 0.78){
+            put(cx + gx, cy + gy, rnd() < redBias ? 'red' : 'dark');
+          }
+        }
+      }
+    }
+
+    makeStem([640,756], [500,580], [560,260], [650,80], 130);
+    makeBranch(560, 460, 520, 420);
+    makeFlower(410, 420, 150, 62, 22);
+    makeFlower(655, 100, 55, 22, 14);
+    makeBranch(605, 330, 690, 300);
+    makeFlower(690, 300, 44, 18, 12);
+    makeLeafCluster(558, 468, Math.PI * 0.92, 1.1, 4, 74, 20);
+    makeLeafCluster(612, 328, -Math.PI * 0.1, 1.0, 3, 58, 18);
+    makeLeafCluster(592, 612, Math.PI * 1.02, 1.1, 4, 60, 18);
+    makeBranch(640, 742, 380, 745);
+    makeStem([380,745], [300,730], [200,700], [120,690], 60);
+    makeLeafCluster(300, 700, Math.PI * 0.15, 1.1, 4, 58, 18);
+    makeLeafCluster(228, 676, -Math.PI * 0.35, 1.0, 3, 48, 16);
+    makeFlower(128, 690, 44, 18, 12);
+    makeBlob(66, 716, 20, 0.75);
+
+    const frag = document.createDocumentFragment();
+    const entries = Array.from(stitches.values());
+    let maxDist = 1;
+    entries.forEach(e => {
+      e.dist = Math.hypot(e.x - ROOT.x, e.y - ROOT.y);
+      if (e.dist > maxDist) maxDist = e.dist;
+    });
+
+    const SPEED = 1.35;
+    const JITTER = 90;
+
+    entries.forEach(e => {
+      const el = document.createElement('div');
+      el.className = 'stitch c-' + e.color;
+      el.style.setProperty('--x', e.x);
+      el.style.setProperty('--y', e.y);
+      const delay = e.dist * SPEED + rnd() * JITTER;
+      el.style.setProperty('--delay', delay.toFixed(0) + 'ms');
+      frag.appendChild(el);
+    });
+    canvas.appendChild(frag);
+
+    const ro = new ResizeObserver(entries => {
+      for (const entry of entries){
+        const scale = entry.contentRect.width / DW;
+        canvas.style.transform = 'scale(' + scale + ')';
+      }
+    });
+    ro.observe(bloomRoot);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => bloomRoot.classList.add('active'));
+    });
+  })();
+
+  // Greeting cycle: Namaste -> Hindi -> Kannada -> Hi -> settles on Hello (~3s total)
+  const greetings = ['Namaste,', 'नमस्ते,', 'ನಮಸ್ಕಾರ,', 'Hi,', 'Hello,'];
+  const greetEl = document.getElementById('greetWord');
+  if(greetEl && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    let gi = 0;
+    const greetTimer = setInterval(() => {
+      gi++;
+      greetEl.textContent = greetings[gi];
+      if(gi === greetings.length - 1){ clearInterval(greetTimer); }
+    }, 600);
+  } else if (greetEl){
+    greetEl.textContent = greetings[greetings.length - 1];
+  }
+
+  // Draggable + clickable hero elements (folder -> manifesto, avatar -> about)
+  function makeDraggable(el, onClick){
+    let startX, startY, origLeft, origTop, dragging = false, moved = false;
+    const parent = el.offsetParent || document.body;
+
+    function pointerDown(e){
+      const p = e.touches ? e.touches[0] : e;
+      dragging = true; moved = false;
+      startX = p.clientX; startY = p.clientY;
+      const rect = el.getBoundingClientRect();
+      const parentRect = parent.getBoundingClientRect();
+      origLeft = rect.left - parentRect.left;
+      origTop = rect.top - parentRect.top;
+      el.style.right = 'auto';
+      el.style.bottom = 'auto';
+      el.style.left = origLeft + 'px';
+      el.style.top = origTop + 'px';
+      document.addEventListener('mousemove', pointerMove);
+      document.addEventListener('touchmove', pointerMove, { passive: false });
+      document.addEventListener('mouseup', pointerUp);
+      document.addEventListener('touchend', pointerUp);
+    }
+    function pointerMove(e){
+      if(!dragging) return;
+      const p = e.touches ? e.touches[0] : e;
+      const dx = p.clientX - startX;
+      const dy = p.clientY - startY;
+      if(Math.abs(dx) > 4 || Math.abs(dy) > 4) moved = true;
+      el.style.left = (origLeft + dx) + 'px';
+      el.style.top = (origTop + dy) + 'px';
+      if(e.cancelable) e.preventDefault();
+    }
+    function pointerUp(){
+      dragging = false;
+      document.removeEventListener('mousemove', pointerMove);
+      document.removeEventListener('touchmove', pointerMove);
+      document.removeEventListener('mouseup', pointerUp);
+      document.removeEventListener('touchend', pointerUp);
+      if(!moved) onClick();
+    }
+
+    el.addEventListener('mousedown', pointerDown);
+    el.addEventListener('touchstart', pointerDown, { passive: true });
+  }
+
+  const folderEl = document.getElementById('folderDrag');
+  const avatarEl = document.getElementById('avatarDrag');
+  if(folderEl){
+    makeDraggable(folderEl, () => {
+      document.getElementById('manifesto').scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+  if(avatarEl){
+    makeDraggable(avatarEl, () => {
+      document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+</script>
+
+</body>
+</html>

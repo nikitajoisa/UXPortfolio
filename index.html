@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nikita Joisa — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Alex+Brush&family=Archivo:ital,wght@0,400;0,500;0,600;1,300&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #f7f6f2;
+    --card-bg: #ffffff;
+    --card-bg-muted: #eeece6;
+    --ink: #1c1b18;
+    --ink-soft: #4a4842;
+    --gray: #99958a;
+    --line: #e2ded3;
+    --accent: #8a2f42;
+    --accent-soft: #f6e9ea;
+    --green: #6f9b6f;
+    --sage: #a9bfae;
+    --radius: 14px;
+    --serif: "Source Serif 4", Georgia, serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --script: "Alex Brush", cursive;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(rgba(28,27,24,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(28,27,24,0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: inherit; }
+
+  .wrap{
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ---------- persistent brand mark ---------- */
+  .site-mark{
+    position: fixed;
+    top: -6px;
+    left: 40px;
+    z-index: 10;
+  }
+  .site-mark img{ display: block; width: 200px; height: 200px; object-fit: contain; }
+
+  .top-icons{
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .top-icons a{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: var(--ink);
+  }
+  .top-icons a:hover{ color: var(--accent); }
+  .top-icons svg{ width: 100%; height: 100%; }
+  .top-icons a::after{
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 100%;
+    margin-top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s ease;
+  }
+  .top-icons a:hover::after{ opacity: 1; }
+
+  /* ---------- shared typography ---------- */
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 18px;
+  }
+  .eyebrow-icon{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 17px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink);
+  }
+  .eyebrow-icon svg{ width:20px; height:20px; }
+
+  h1.display{
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(52px, 7vw, 92px);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    margin: 6px 0 28px;
+  }
+  h2.display{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(32px, 3.6vw, 44px);
+    line-height: 1.12;
+    margin: 0 0 30px;
+  }
+
+  p.lede{
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0 0 18px;
+  }
+  .page p.lede{ margin-bottom: 26px; }
+  .page .eyebrow{ margin-bottom: 26px; }
+  .cover p.lede{ font-size: 20px; max-width: 46ch; }
+
+  .link-arrow{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    margin-top: 4px;
+  }
+
+  /* ---------- reveal-on-scroll ---------- */
+  .reveal{
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in-view{
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
+  /* ---------- badges ---------- */
+  .badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom: 40px;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card-bg);
+  }
+  .badge.shipped{ color: #3f6a3f; }
+  .badge.progress{ color: #a06a24; }
+  .badge .dot{
+    width:7px; height:7px; border-radius:50%;
+    background: var(--green);
+    display:inline-block;
+  }
+  .badge.progress .dot{ background: #d9962c; }
+
+  /* ---------- meta grid ---------- */
+  .meta-panel{
+    background: var(--card-bg-muted);
+    border-radius: var(--radius);
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px 64px;
+    margin-top: 56px;
+  }
+  .meta-item .k{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0 0 8px;
+  }
+  .meta-item .v{
+    font-size: 17px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ================= COVER ================= */
+  .cover{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 140px 0 100px;
+  }
+  .cover-hero{ text-align: center; }
+  .cover-kicker{
+    font-family: var(--script);
+    font-weight: 400;
+    font-size: clamp(24px, 3vw, 34px);
+    color: var(--ink-soft);
+    margin: 0 0 4px;
+  }
+  .cover-word{
+    font-family: var(--script);
+    font-weight: 400;
+    font-size: clamp(90px, 18vw, 260px);
+    line-height: 0.85;
+    letter-spacing: 0;
+    color: var(--accent);
+    margin: 0;
+    display: inline-block;
+    transition: transform .35s ease;
+  }
+  .cover-word:hover{ transform: translateY(-14px); }
+
+  .home-dock{
+    display:flex;
+    gap: 28px;
+    align-items: flex-start;
+    justify-content: center;
+    background: var(--card-bg);
+    border-radius: 28px;
+    padding: 20px 30px;
+    box-shadow: 0 24px 60px -24px rgba(28,27,24,0.3);
+    width: fit-content;
+    margin: 110px auto 0;
+  }
+  .dock-item{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .dock-icon{
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: var(--card-bg-muted);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow: hidden;
+    transition: transform .2s ease;
+  }
+  .dock-item:hover .dock-icon{ transform: translateY(-4px); }
+  .dock-icon img{ width: 60%; height: 60%; object-fit: contain; }
+  .dock-icon-photo{ padding: 0; }
+  .dock-icon-photo img{ width: 100%; height: 100%; object-fit: cover; }
+  .dock-label{
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .typing-cursor{ animation: none; }
+  }
+
+  /* ================= ABOUT ================= */
+  .about{
+    padding: 120px 0;
+    border-top: 1px solid var(--line);
+  }
+  .about-grid{
+    display: grid;
+    grid-template-columns: minmax(0, 560px) 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 64px;
+    row-gap: 0;
+    align-items: start;
+  }
+  .about-title{
+    grid-column: 2;
+    grid-row: 1;
+    font-family: var(--script);
+    font-weight: 400;
+    font-size: clamp(40px, 4.6vw, 64px);
+    color: var(--ink);
+    margin: 0 0 22px;
+    line-height: 1;
+  }
+  .portrait{ grid-column: 1; grid-row: 2; }
+  .about-body{ grid-column: 2; grid-row: 2; }
+
+  /* ---------- macOS-style photo viewer ---------- */
+  .mac-window{
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    box-shadow: 0 24px 60px rgba(28,27,24,0.14);
+  }
+  .mac-titlebar{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    background: #ececec;
+    border-bottom: 1px solid var(--line);
+  }
+  .mac-dots{ display:flex; gap: 7px; }
+  .mac-dots .dot{ width: 12px; height: 12px; border-radius: 50%; display:block; }
+  .mac-dots .dot.red{ background:#ee6a5f; }
+  .mac-dots .dot.yellow{ background:#f5bd4f; }
+  .mac-dots .dot.green{ background:#61c454; }
+  .mac-title{
+    flex: 1;
+    text-align: center;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .mac-title-actions{
+    display:flex;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--gray);
+  }
+  .mac-body{
+    display: flex;
+    height: 600px;
+  }
+  .mac-sidebar{
+    width: 150px;
+    flex-shrink: 0;
+    overflow-y: auto;
+    background: #fafafa;
+    border-right: 1px solid var(--line);
+    padding: 10px;
+  }
+  .thumb{
+    display: block;
+    width: 100%;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .thumb img{
+    display: block;
+    width: 100%;
+    height: 78px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .thumb:hover{ background: var(--card-bg-muted); }
+  .thumb.active{ background: var(--accent-soft); border-color: var(--accent); }
+  .mac-main{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg-muted);
+    overflow: hidden;
+  }
+  .mac-main img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .about .meta-panel{
+    padding: 34px 36px;
+    gap: 28px 48px;
+    margin: 36px 0 32px;
+  }
+  .about .meta-item .v{ font-size: 16px; }
+  .skills-label{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0 0 14px;
+  }
+  .badge-row{ display: flex; flex-wrap: wrap; gap: 10px; }
+
+  /* ================= MANIFESTO ================= */
+  .manifesto{
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 40px;
+    border-top: 1px solid var(--line);
+  }
+  .manifesto .eyebrow{ text-align: center; }
+  .manifesto p.statement{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(30px, 4.6vw, 56px);
+    line-height: 1.22;
+    max-width: 18ch;
+    margin: 0 0 26px;
+  }
+  .manifesto .statement .accent-word{ color: var(--accent); }
+  .typing-cursor{
+    display: inline-block;
+    width: 2px;
+    height: 0.9em;
+    margin-left: 2px;
+    background: currentColor;
+    vertical-align: -0.12em;
+    animation: caret-blink 1s steps(1) infinite;
+  }
+  @keyframes caret-blink{ 50%{ opacity: 0; } }
+  .manifesto p.sub{
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0;
+  }
+
+  /* ================= BRIDGE TRANSITION ================= */
+  .bridge{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 40px;
+    border-top: 1px solid var(--line);
+  }
+  .bridge-text{
+    opacity: 0;
+    transform: translateY(36px);
+    will-change: transform, opacity;
+  }
+  .bridge-kicker{
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0 0 20px;
+  }
+  .bridge-title{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(30px, 4.6vw, 56px);
+    line-height: 1.22;
+    color: var(--ink);
+    max-width: 20ch;
+    margin: 0 auto;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bridge-text{ opacity: 1; transform: none; }
+  }
+
+  /* ================= CASE STUDY LAYOUT ================= */
+  .page{
+    display:grid;
+    grid-template-columns: 260px minmax(0,1fr);
+    gap: 64px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 80px 48px 180px;
+    border-top: 1px solid var(--line);
+  }
+
+  .sidebar{
+    position: sticky;
+    top: 112px;
+    align-self: start;
+    height: fit-content;
+  }
+
+  .top-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 9px 20px 9px 16px;
+    cursor: pointer;
+    margin-bottom: 44px;
+  }
+  .top-btn:hover{ border-color: var(--ink-soft); }
+
+  .toc{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .toc a{
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray);
+    transition: color .15s ease;
+  }
+  .toc a:hover{ color: var(--ink); }
+  .toc a.active{ color: var(--accent); font-weight: 500; }
+
+  main{ min-width: 0; max-width: 760px; }
+
+  .page section{
+    padding-top: 130px;
+    margin-top: -130px;
+  }
+  .page section + section{ margin-top: 0; }
+
+  .hover-hint{
+    display:block;
+    text-align:right;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0 0 16px;
+  }
+
+  /* ---------- hero product preview: main shot + two floating detail shots ---------- */
+  .hero-visual{
+    position: relative;
+    margin: 0 0 90px;
+    padding: 0 8% 14% 0;
+  }
+  .hero-shot{
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px -20px rgba(28,27,24,0.38);
+  }
+  .hero-shot img{
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-float{
+    position: absolute;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--card-bg);
+    box-shadow: 0 16px 36px -8px rgba(28,27,24,0.3);
+  }
+  .hero-float img{
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .hero-float-pricing{
+    width: 41%;
+    top: 22%;
+    right: -1%;
+    z-index: 3;
+  }
+  .hero-float-swim{
+    width: 51%;
+    top: 54%;
+    right: 6%;
+    z-index: 2;
+  }
+
+  @media (max-width: 860px){
+    .hero-visual{ padding: 0; margin-bottom: 40px; }
+    .hero-float{ position: static; width: 100%; margin-top: 14px; box-shadow: none; border: 1px solid var(--line); }
+  }
+
+  /* ---------- problem screenshot preview ---------- */
+  .ss-preview{
+    margin-bottom: 32px;
+  }
+  .ss-frame{
+    display: block;
+  }
+  .ss-frame img{
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    opacity: 1;
+    transition: opacity .2s ease;
+  }
+  .ss-frame img.is-fading{
+    opacity: 0;
+  }
+
+  /* ---------- problem cards ---------- */
+  .card-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 56px;
+  }
+  .num-card{
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 28px 28px;
+    cursor: pointer;
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+  }
+  .num-card:hover,
+  .num-card.active{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+    transform: translateY(-2px);
+  }
+  .num-card .badge-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--card-bg-muted);
+    font-family: var(--mono);
+    font-size: 13px;
+    margin-bottom: 12px;
+    transition: background .18s ease, color .18s ease;
+  }
+  .num-card:hover .badge-num,
+  .num-card.active .badge-num{
+    background: var(--accent);
+    color: #fff;
+  }
+  .num-card h3{
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 16.5px;
+    margin: 0 0 6px;
+  }
+  .num-card p{
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ---------- user pattern panel ---------- */
+  .pattern-panel{
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 10px 48px;
+    margin-bottom: 90px;
+  }
+  .pattern-row{
+    display:flex;
+    gap: 22px;
+    align-items: flex-start;
+    padding: 38px 0;
+  }
+  .pattern-row + .pattern-row{ border-top: 1px solid var(--line); }
+  .pattern-icon{
+    width: 22px; height: 22px;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .pattern-row h4{
+    display:inline-flex;
+    align-items:center;
+    gap: 12px;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0 0 8px;
+  }
+  .tag-pill{
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-weight: 400;
+  }
+  .tag-pill.deep{ background:#e7f1e7; color:#3f6a3f; }
+  .tag-pill.surface{ background:#fbeedd; color:#a06a24; }
+  .pattern-row p{
+    margin:0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 60ch;
+  }
+
+  /* ---------- numbered process items ---------- */
+  .process-step{
+    display:grid;
+    grid-template-columns: 70px 1fr;
+    gap: 32px;
+    margin-bottom: 64px;
+  }
+  .process-step + .process-step{ border-top: 1px solid var(--line); padding-top: 48px; }
+  .process-step .step-num{
+    font-family: var(--serif);
+    font-size: 34px;
+    color: var(--gray);
+    font-weight: 400;
+  }
+  .process-step h3{
+    font-size: 20px;
+    font-weight: 700;
+    margin: 2px 0 12px;
+  }
+
+  /* ---------- reflections ---------- */
+  .reflection-item{
+    display:grid;
+    grid-template-columns: minmax(220px, 380px) 1fr;
+    gap: 60px;
+    padding: 48px 0;
+  }
+  .reflection-head{ display:flex; flex-direction: column; }
+  .reflection-icon{
+    width: 26px;
+    height: 26px;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .reflection-item h3{
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(26px, 2.6vw, 34px);
+    line-height: 1.18;
+    margin: 0;
+    max-width: 15ch;
+  }
+  .reflection-item p{
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0;
+    margin-top: 46px;
+    max-width: 60ch;
+  }
+  .process-step .step-subtitle{
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin: -6px 0 12px;
+  }
+  .quote-card{
+    background: var(--card-bg-muted);
+    border-radius: var(--radius);
+    padding: 34px 38px;
+    margin-top: 28px;
+  }
+  .quote-card .quote-text{
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0 0 18px;
+    max-width: 68ch;
+  }
+  .quote-card .quote-attr{
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .quote-card .accent-word{ color: var(--accent); font-style: normal; }
+  .process-step p{
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 68ch;
+  }
+  .process-media{
+    margin-top: 28px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--card-bg);
+    box-shadow: 0 24px 60px -24px rgba(28,27,24,0.25);
+  }
+  .process-media video{
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: -18px;
+  }
+
+  /* ---------- process step charts ---------- */
+  .chart-card{
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 34px 36px 30px;
+    margin-top: 28px;
+  }
+  .chart-card .chart-title{
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 17px;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+  .chart-card .chart-sub{ font-size: 13px; color: var(--gray); margin: 0 0 18px; }
+  .chart-card .legend{
+    display:flex; flex-wrap:wrap; gap:14px; margin-bottom:14px;
+    font-size:12.5px; color: var(--ink-soft);
+  }
+  .chart-card .legend span{ display:flex; align-items:center; gap:6px; }
+  .chart-card .swatch{ width:10px; height:10px; border-radius:2px; display:inline-block; }
+  .chart-card .chart-wrap{ position:relative; width:100%; height:300px; }
+  .chart-card .chart-wrap.tall{ height:340px; }
+  .chart-card .note{ font-size:12px; color: var(--gray); margin-top:14px; line-height:1.6; }
+
+  /* ---------- final product: before/after compare panels ---------- */
+  .product-stack{
+    display:flex;
+    flex-direction: column;
+    gap: 64px;
+    margin-bottom: 32px;
+  }
+  .product-item + .product-item{
+    border-top: 1px solid var(--line);
+    padding-top: 48px;
+  }
+  .product-title{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 23px;
+    margin: 0 0 16px;
+  }
+  .product-item p{
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 68ch;
+    margin: 0 0 28px;
+  }
+  .compare-hint{
+    display:block;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0 0 10px;
+  }
+  .compare-panel{
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--card-bg);
+  }
+  .compare-tabs-full{
+    display:flex;
+  }
+  .compare-tab-full{
+    flex: 1;
+    text-align: center;
+    padding: 16px 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    background: var(--card-bg-muted);
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .compare-tab-full + .compare-tab-full{ border-left: 1px solid var(--line); }
+  .compare-tab-full.active{
+    background: var(--card-bg);
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+  .compare-media{ position: relative; border-top: 1px solid var(--line); overflow: hidden; }
+  .compare-video{
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: -60px;
+  }
+  .compare-old{ display: none; margin-top: -76px; }
+  .compare-panel.is-comparing .compare-old{ display: block; }
+  .compare-panel.is-comparing .compare-new{ display: none; }
+  /* ---------- design system panel ---------- */
+  .design-system{
+    margin-top: 12px;
+    border-top: 1px solid var(--line);
+    padding-top: 48px;
+  }
+  .ds-title{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 23px;
+    margin: 0 0 12px;
+  }
+  .ds-sub{
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 68ch;
+    margin: 0 0 28px;
+  }
+  .ds-panel{
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--card-bg);
+    padding: 40px;
+  }
+  .ds-block + .ds-block{ margin-top: 40px; }
+  .ds-label{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0 0 18px;
+  }
+  .ds-fonts{ display:flex; gap: 16px; flex-wrap: wrap; }
+  .ds-font-swatch{
+    background: var(--card-bg-muted);
+    border-radius: 10px;
+    padding: 28px 36px;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    gap: 10px;
+    min-width: 150px;
+  }
+  .ds-aa{ font-size: 42px; color: var(--ink); line-height: 1; }
+  .ds-font-name{ font-family: var(--sans); font-size: 13.5px; color: var(--ink-soft); }
+  .ds-marquee{
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  }
+  .ds-marquee-track{
+    display:flex;
+    align-items: flex-start;
+    gap: 48px;
+    width: max-content;
+    animation: ds-scroll 18s linear infinite;
+  }
+  @keyframes ds-scroll{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+  .ds-swatch-group{ flex-shrink: 0; }
+  .ds-group-label{
+    display:block;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .ds-swatches{ display:flex; gap: 8px; }
+  .ds-swatch{
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display:inline-block;
+  }
+
+  /* ---------- impact stat cards ---------- */
+  .stat-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 36px;
+  }
+  .stat-card{
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 30px 26px;
+  }
+  .stat-number{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
+  .stat-desc{
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ---------- closing ---------- */
+  .closing{
+    text-align: center;
+    padding: 100px 40px 100px;
+  }
+  .closing-text{
+    font-family: var(--script);
+    font-weight: 400;
+    font-size: clamp(48px, 7vw, 84px);
+    line-height: 1;
+    color: var(--accent);
+    margin: 70px 0 0;
+  }
+  .closing-divider{
+    border-top: 1px solid var(--line);
+  }
+  .contact-block{
+    margin-top: 90px;
+  }
+  .contact-photo{
+    display: block;
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 18px;
+  }
+  .contact-name{
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+    margin: 0 0 2px;
+  }
+  .contact-role{
+    font-family: var(--sans);
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin: 0 0 48px;
+  }
+  .contact-cta{
+    font-family: var(--script);
+    font-weight: 400;
+    font-size: clamp(42px, 6vw, 72px);
+    line-height: 1;
+    color: var(--accent);
+    margin: 0 0 24px;
+  }
+  .contact-email{
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .contact-email:hover{ color: var(--accent); border-color: var(--accent); }
+
+  @media (max-width: 860px){
+    .wrap{ padding: 0 22px; }
+    .site-mark{ top: 24px; left: 22px; }
+    .top-icons{ top: 24px; right: 22px; gap: 10px; }
+    .top-icons a{ width: 32px; height: 32px; }
+    .about-grid{ grid-template-columns: 1fr; grid-template-rows: none; gap: 32px; }
+    .about-title, .portrait, .about-body{ grid-column: 1; grid-row: auto; }
+    .mac-body{ height: 440px; }
+    .mac-sidebar{ width: 110px; }
+    .about .meta-panel{ grid-template-columns: 1fr; padding: 26px; }
+
+    .page{ grid-template-columns: 1fr; padding: 32px 22px 100px; }
+    .sidebar{ position: static; display:flex; flex-direction:column; }
+    .toc{ flex-direction: column; gap: 24px; }
+    .toc a{ font-size: 15px; }
+    .top-btn{ font-size: 16px; padding: 12px 26px 12px 20px; }
+    .meta-panel{ grid-template-columns: 1fr; padding: 28px; }
+    .card-grid{ grid-template-columns: 1fr; }
+    .stat-grid{ grid-template-columns: 1fr; }
+    .process-step{ grid-template-columns: 44px 1fr; gap: 16px; }
+    .reflection-item{ grid-template-columns: 1fr; gap: 16px; padding: 32px 0; }
+  }
+</style>
+</head>
+<body id="top">
+
+  <div class="site-mark">
+    <img src="Images/logonobg.png" alt="Nikita Joisa logo">
+  </div>
+
+  <div class="top-icons">
+    <a href="https://www.linkedin.com/in/nikitajoisa/" target="_blank" rel="noopener" aria-label="LinkedIn" data-tooltip="LinkedIn">
+      <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="currentColor"/><path fill="#f7f6f2" d="M7.2 9.5h2.4v7.7H7.2V9.5zm1.2-3.8a1.4 1.4 0 1 1 0 2.8 1.4 1.4 0 0 1 0-2.8zM11 9.5h2.3v1.05h.03c.32-.6 1.1-1.25 2.27-1.25 2.43 0 2.88 1.6 2.88 3.68v4.22h-2.4v-3.74c0-.89-.02-2.04-1.24-2.04-1.25 0-1.44.97-1.44 1.98v3.8H11V9.5z"/></svg>
+    </a>
+    <a href="mailto:nikitajoisaie@gmail.com" aria-label="Email" data-tooltip="Say hello">
+      <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="currentColor"/><path fill="#f7f6f2" d="M5 8.5 12 13l7-4.5V8a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v.5zm0 1.8V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5.7l-7 4.5-7-4.5z"/></svg>
+    </a>
+    <a href="#" aria-label="Download resume" data-tooltip="Resume">
+      <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="currentColor"/><path fill="none" stroke="#f7f6f2" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" d="M7 4.5h7l3 3v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-14a.5.5 0 0 1 .5-.5zM14 4.5v2.5a.5.5 0 0 0 .5.5H17M9 12h6M9 14.5h6M9 17h4"/></svg>
+    </a>
+  </div>
+
+  <!-- ================= COVER ================= -->
+  <section class="cover wrap">
+    <div class="cover-hero reveal">
+      <p class="cover-kicker">welcome to my</p>
+      <h1 class="cover-word">portfolio</h1>
+    </div>
+
+    <nav class="home-dock reveal" aria-label="Quick links">
+      <a class="dock-item" href="#manifesto">
+        <span class="dock-icon"><img src="Images/foldernobg.png" alt="" draggable="false"></span>
+        <span class="dock-label">works</span>
+      </a>
+      <a class="dock-item" href="#about">
+        <span class="dock-icon dock-icon-photo"><img src="Images/Retrato%20pixel.jpeg" alt="" draggable="false"></span>
+        <span class="dock-label">profile</span>
+      </a>
+      <a class="dock-item" href="mailto:nikitajoisaie@gmail.com">
+        <span class="dock-icon"><img src="Images/contact.png" alt="" draggable="false"></span>
+        <span class="dock-label">contact</span>
+      </a>
+    </nav>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="about wrap" id="about">
+    <div class="about-grid">
+      <div class="portrait reveal">
+        <div class="mac-window">
+          <div class="mac-titlebar">
+            <div class="mac-dots">
+              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            </div>
+            <div class="mac-title">17V28 (7 images)</div>
+            <div class="mac-title-actions">
+              <span>&#9432;</span><span>&#128269;&#8722;</span><span>&#128269;&#43;</span>
+            </div>
+          </div>
+          <div class="mac-body">
+            <div class="mac-sidebar" id="gallery-thumbs">
+              <button type="button" class="thumb active" data-full="Images/mainnik.jpg">
+                <img src="Images/mainnik.jpg" alt="">
+                <span>01.jpg</span>
+              </button>
+              <button type="button" class="thumb" data-full="Images/main1nik.jpg">
+                <img src="Images/main1nik.jpg" alt="">
+                <span>02.jpg</span>
+              </button>
+              <button type="button" class="thumb" data-full="Images/main2nik.jpg">
+                <img src="Images/main2nik.jpg" alt="">
+                <span>03.jpg</span>
+              </button>
+              <button type="button" class="thumb" data-full="Images/main3nik.jpeg">
+                <img src="Images/main3nik.jpeg" alt="">
+                <span>04.jpg</span>
+              </button>
+              <button type="button" class="thumb" data-full="Images/main4nik.jpeg">
+                <img src="Images/main4nik.jpeg" alt="">
+                <span>05.jpg</span>
+              </button>
+              <button type="button" class="thumb" data-full="Images/main5nik.jpeg">
+                <img src="Images/main5nik.jpeg" alt="">
+                <span>06.jpg</span>
+              </button>
+              <button type="button" class="thumb" data-full="Images/main6nik.jpeg">
+                <img src="Images/main6nik.jpeg" alt="">
+                <span>07.jpg</span>
+              </button>
+            </div>
+            <div class="mac-main">
+              <img id="gallery-main-img" src="Images/mainnik.jpg" alt="Nikita Joisa">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="about-title reveal">About Me</h2>
+
+      <div class="about-body">
+        <p class="lede reveal">I'm a Web and UX Designer who enjoys creating digital experiences that are both visually engaging and intuitive. I love solving problems where aesthetics meet functionality, designing interfaces that not only look good but also help people achieve their goals with ease.</p>
+        <p class="lede reveal">What draws me to design is understanding people, their needs, behaviours, and frustrations and turning those insights into thoughtful experiences. Guided by empathy, curiosity, and continuous refinement, I create responsive websites, improve user journeys, and prototype ideas that are accessible, meaningful, and intuitive. I believe the best experiences are created when technology feels less like a tool and more like something people can naturally connect with.</p>
+
+        <div class="meta-panel reveal">
+          <div class="meta-item">
+            <p class="k">Based</p>
+            <p class="v">Cork, Ireland — roots in Bengaluru</p>
+          </div>
+          <div class="meta-item">
+            <p class="k">Currently</p>
+            <p class="v">Web Developer &amp; UX Designer, LeisureWorld Cork</p>
+          </div>
+          <div class="meta-item">
+            <p class="k">Education</p>
+            <p class="v">BE Information Science; MSc Business Analytics, UCC</p>
+          </div>
+          <div class="meta-item">
+            <p class="k">Focus</p>
+            <p class="v">UX/UI Designer</p>
+          </div>
+        </div>
+
+        <p class="skills-label reveal">Skills &amp; Tools</p>
+        <div class="badge-row reveal">
+          <span class="badge">Interaction Design</span>
+          <span class="badge">Information Architecture</span>
+          <span class="badge">Prototyping</span>
+          <span class="badge">Stakeholder Presentation</span>
+          <span class="badge">User Research</span>
+          <span class="badge">Usability Testing</span>
+          <span class="badge">Figma</span>
+          <span class="badge">HTML</span>
+          <span class="badge">CSS</span>
+          <span class="badge">JavaScript</span>
+          <span class="badge">PHP</span>
+          <span class="badge">Bootstrap</span>
+          <span class="badge">Canva</span>
+          <span class="badge">Claude Code/Design</span>
+          <span class="badge">Prompt Engineering</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MANIFESTO ================= -->
+  <section class="manifesto" id="manifesto">
+    <p class="eyebrow reveal">Why one case study</p>
+    <p class="statement reveal">One live, ongoing project, shown <span class="accent-word">deeply</span>, beats five shown shallow.</p>
+    <p class="sub reveal">This is that project ↓</p>
+  </section>
+
+  <!-- ================= BRIDGE TRANSITION ================= -->
+  <section class="bridge" id="bridge">
+    <div class="bridge-text">
+      <p class="bridge-kicker">Leisureworld Cork</p>
+      <p class="bridge-title">From Reception Desk to Boardroom</p>
+    </div>
+  </section>
+
+  <!-- ================= CASE STUDY ================= -->
+  <div class="page">
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar">
+      <a class="top-btn" href="#top">
+        <span>&#8593;</span> Top
+      </a>
+
+      <nav>
+        <ul class="toc">
+          <li><a href="#tldr" class="nav-link">TL;DR</a></li>
+          <li><a href="#background" class="nav-link">Background</a></li>
+          <li><a href="#problem" class="nav-link">Problem</a></li>
+          <li><a href="#process" class="nav-link">Process</a></li>
+          <li><a href="#final-product" class="nav-link">Final Product</a></li>
+          <li><a href="#impact" class="nav-link">Impact</a></li>
+          <li><a href="#reflections" class="nav-link">Reflections</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main>
+
+      <!-- ---------- TL;DR / HERO ---------- -->
+      <section id="tldr">
+
+        <div class="hero-visual reveal">
+          <div class="hero-shot">
+            <img src="Images/1-full.jpg" alt="LWv4 homepage redesign — 'Every Body Belongs' hero section">
+          </div>
+
+          <div class="hero-float hero-float-pricing">
+            <img src="Images/3-full.jpg" alt="LWv4 membership plans — pay in full, membership, and Aquatics Centre lessons pricing">
+          </div>
+
+          <div class="hero-float hero-float-swim">
+            <img src="Images/2-full.jpg" alt="LWv4 Swim School page — Water Safety &amp; Fun programme">
+          </div>
+        </div>
+
+        <p class="eyebrow eyebrow-icon reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="1.4" fill="currentColor" stroke="none"/></svg>
+          LeisureWorld Cork
+        </p>
+
+        <h1 class="display reveal">Redesigning LeisureWorld Cork's Digital Experience</h1>
+
+        <div class="badges reveal">
+          <span class="badge progress"><span class="dot"></span>In Progress</span>
+          <span class="badge">Full-Stack Rebuild</span>
+          <span class="badge">Responsive</span>
+          <span class="badge">Consumer Web</span>
+        </div>
+
+        <p class="eyebrow">TL;DR</p>
+        <p class="lede reveal">LeisureWorld Cork is a health, fitness, and recreation provider operating three centres across Cork. As a self-initiated UI/UX case study, I evaluated the existing website to identify usability issues and user pain points affecting key user journeys.</p>
+        <p class="lede reveal">Using a user-centred design process, I redesigned the experience with improved navigation, information architecture, and accessibility before developing the solution as a fully custom, responsive website using HTML, CSS, JavaScript, PHP, and Bootstrap.</p>
+        <a class="link-arrow" href="#">See the GitHub repo &#8594;</a>
+
+        <div class="meta-panel reveal">
+          <div class="meta-item">
+            <p class="k">Role</p>
+            <p class="v">UX/UI Designer &amp; Front-End Developer (Self-initiated case study)</p>
+          </div>
+          <div class="meta-item">
+            <p class="k">Timeline</p>
+            <p class="v">December 2025 – Present</p>
+          </div>
+          <div class="meta-item">
+            <p class="k">Collaboration</p>
+            <p class="v">Solo project with stakeholder feedback from the CEO, Marketing Manager, and Operations Manager</p>
+          </div>
+          <div class="meta-item">
+            <p class="k">Methods &amp; Tools</p>
+            <p class="v">User Research, Information Architecture, Wireframing, Prototyping, Usability Testing, Figma, HTML, CSS, JavaScript, PHP, Bootstrap</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- BACKGROUND ---------- -->
+      <section id="background">
+        <p class="eyebrow">Background</p>
+        <h2 class="display reveal">An outdated experience that created unnecessary friction</h2>
+        <p class="lede reveal">The existing LeisureWorld Cork website no longer met users' expectations. Its maze-like navigation, cluttered information architecture, and inconsistent content made it difficult for visitors to locate essential information, creating frustration and reducing the overall usability of the site.</p>
+      </section>
+
+      <!-- ---------- PROBLEM ---------- -->
+      <section id="problem">
+        <p class="eyebrow">Problem</p>
+        <h2 class="display reveal">Four key usability issues identified through stakeholder interviews</h2>
+        <p class="lede reveal">To understand the existing experience, I conducted interviews with customers, front-line staff, and back-office stakeholders. These conversations revealed four recurring usability issues that affected both users and the organisation.</p>
+
+        <div class="ss-preview reveal">
+          <div class="ss-frame">
+            <img id="problem-ss-img" src="Images/1.ss.png" alt="Maze-like navigation on the existing LeisureWorld Cork website">
+          </div>
+        </div>
+
+        <span class="hover-hint">Hover cards to explore</span>
+
+        <div class="card-grid reveal" id="problem-cards">
+          <div class="num-card active" data-img="Images/1.ss.png" data-alt="Maze-like navigation on the existing LeisureWorld Cork website">
+            <span class="badge-num">1</span>
+            <h3>Maze-like navigation</h3>
+            <p>Users found it difficult to navigate the website and locate key services due to a confusing information architecture.</p>
+          </div>
+          <div class="num-card" data-img="Images/2.ss.png" data-alt="A disruptive pop-up interrupting the user's journey on the existing site">
+            <span class="badge-num">2</span>
+            <h3>Disruptive pop-ups</h3>
+            <p>Frequent and unnecessary pop-ups interrupted users' journeys, creating friction and reducing engagement.</p>
+          </div>
+          <div class="num-card" data-img="Images/3.ss.png" data-alt="The Swim School page buried behind nested navigation and accordions">
+            <span class="badge-num">3</span>
+            <h3>Poor visibility of core services</h3>
+            <p>Participants consistently highlighted that the Swim School — LeisureWorld's core service — was difficult to find and lacked clear, comprehensive information.</p>
+          </div>
+          <div class="num-card" data-img="Images/4.ss.png" data-alt="Duplicate content blocks repeated across multiple pages of the existing site">
+            <span class="badge-num">4</span>
+            <h3>Duplicate and inconsistent content</h3>
+            <p>Staff explained that similar information existed across multiple pages, making content difficult to maintain and leading to outdated or conflicting information being shown to users.</p>
+          </div>
+        </div>
+
+        <p class="lede">The redesign had one guiding constraint: improve usability by simplifying navigation and content without removing the information users and staff depend on.</p>
+
+        <p class="eyebrow" style="margin-top:44px;color:var(--gray);">User Patterns</p>
+        <div class="pattern-panel reveal">
+          <div class="pattern-row">
+            <svg class="pattern-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/></svg>
+            <div>
+              <h4>Members &amp; Visitors <span class="tag-pill deep">Task-focused engagement</span></h4>
+              <p>Users visit the website to quickly find information about memberships, swimming lessons, fitness classes, timetables, or facility bookings. They expect clear navigation and fast access to relevant information.</p>
+            </div>
+          </div>
+          <div class="pattern-row">
+            <svg class="pattern-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5c3-1.4 6-1.4 8 0v14c-2-1.4-5-1.4-8 0V5z"/><path d="M20 5c-3-1.4-6-1.4-8 0v14c2-1.4 5-1.4 8 0V5z"/></svg>
+            <div>
+              <h4>Parents &amp; Families <span class="tag-pill surface">Information-focused engagement</span></h4>
+              <p>Parents primarily look for details about the Swim School, children's camps, and birthday parties. They need comprehensive, easy-to-find information, including schedules, pricing, enrolment, and FAQs, to make informed decisions.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- PROCESS ---------- -->
+      <section id="process">
+        <p class="eyebrow">Process</p>
+        <h2 class="display reveal">From research to a user-centred redesign</h2>
+
+        <div class="process-step reveal">
+          <span class="step-num">01</span>
+          <div>
+            <h3>Building a shared understanding of users and stakeholders</h3>
+            <p>Stakeholder interviews informed a stakeholder map, personas, empathy maps, and customer journey maps, providing a shared understanding of user needs, business priorities, and key pain points. These insights established a strong foundation for the redesign and ensured design decisions were driven by research rather than assumptions.</p>
+            <div class="process-media reveal">
+              <video src="Videos/Ideation.mp4" autoplay muted loop playsinline></video>
+            </div>
+          </div>
+        </div>
+
+        <div class="process-step reveal">
+          <span class="step-num">02</span>
+          <div>
+            <h3>Turning research into design priorities</h3>
+            <p>Research insights were synthesised into point-of-view statements and "How Might We" questions to define the key challenges affecting users and staff. This created a clear direction for the redesign and ensured subsequent design decisions addressed the highest-priority issues.</p>
+
+            <div class="chart-card reveal">
+              <p class="chart-title">Emotional trend across the journey</p>
+              <p class="chart-sub">Estimated emotion score, -2 to 2, across five journey stages, per persona</p>
+              <div class="legend">
+                <span><span class="swatch" style="background:#2a78d6"></span>Parent</span>
+                <span><span class="swatch" style="background:#eb6834"></span>Member</span>
+                <span><span class="swatch" style="background:#1baf7a"></span>Prospect</span>
+                <span><span class="swatch" style="background:#eda100"></span>Older customer</span>
+                <span><span class="swatch" style="background:#e87ba4"></span>Reception</span>
+              </div>
+              <div class="chart-wrap">
+                <canvas id="trendChart" role="img" aria-label="Estimated emotional score across five journey stages for five personas">
+                  Parent: 0,-1,-1,1,2. Member: 1,0,-1,1,1. Prospect: 0,-1,0,1,0. Older customer: 1,-1,-2,1,2. Reception: 0,-1,-1,-2,0.
+                </canvas>
+              </div>
+            </div>
+
+            <p style="margin-top: 28px;">Visualisations of estimated frequency and severity highlighted the most recurring pain points, supporting prioritisation before moving into design.</p>
+
+            <div class="chart-card reveal">
+              <p class="chart-title">Pain point priority matrix</p>
+              <p class="chart-sub">Frequency versus severity, bubble size is the combined priority score</p>
+              <div class="legend">
+                <span><span class="swatch" style="background:#2a78d6"></span>Parent — booking confirmation</span>
+                <span><span class="swatch" style="background:#eb6834"></span>Member — buried timetable</span>
+                <span><span class="swatch" style="background:#1baf7a"></span>Prospect — unclear PAYG price</span>
+                <span><span class="swatch" style="background:#eda100"></span>Older customer — complex booking</span>
+                <span><span class="swatch" style="background:#e87ba4"></span>Reception — repetitive questions</span>
+              </div>
+              <div class="chart-wrap tall">
+                <canvas id="priorityChart" role="img" aria-label="Bubble chart of frequency versus severity for five pain points, bubble size is priority score">
+                  Parent: frequency 3, severity 4, score 12. Member: frequency 5, severity 3, score 15. Prospect: frequency 2, severity 5, score 10. Older customer: frequency 4, severity 4, score 16. Reception: frequency 5, severity 4, score 20.
+                </canvas>
+              </div>
+              <p class="note">Scores are estimates from the empathy and journey map synthesis, not measured data.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="process-step reveal">
+          <span class="step-num">03</span>
+          <div>
+            <h3>Prototype &amp; Ideation</h3>
+            <p class="step-subtitle">Exploring and refining design concepts</p>
+            <p>I sketched early interface ideas on paper to quickly explore layouts, navigation patterns, and content hierarchy before developing them into digital wireframes. These low-fidelity concepts made it easier to evaluate different approaches, gather stakeholder feedback, and refine the direction before moving into high-fidelity designs.</p>
+            <div class="process-media reveal">
+              <video src="Videos/prototype.mp4" autoplay muted loop playsinline></video>
+            </div>
+          </div>
+        </div>
+
+        <div class="process-step reveal">
+          <span class="step-num">04</span>
+          <div>
+            <h3>Internal testing for validation</h3>
+            <p class="step-subtitle">Validating the redesign with key stakeholders</p>
+            <p>The prototype was reviewed in iterative sessions with the Project Lead, Operations Manager, Marketing Manager, and CEO. Their feedback helped validate navigation, content structure, and user flows, ensuring the proposed solution aligned with both user needs and organisational goals before development.</p>
+            <div class="quote-card reveal">
+              <p class="quote-text">"I don't feel like I'm searching anymore, I <span class="accent-word">know</span> where to go."</p>
+              <p class="quote-attr">— CEO, stakeholder review</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- FINAL PRODUCT ---------- -->
+      <section id="final-product">
+        <p class="eyebrow">Final Product</p>
+        <h2 class="display reveal">A redesign built around what users actually need</h2>
+
+        <div class="product-stack reveal">
+          <div class="product-item">
+            <h3 class="product-title">Homepage</h3>
+            <p>User goals became the primary focus, reducing clutter and improving content hierarchy. Each section highlights essential information, guiding users towards key services and actions. The rebuild also creates a consistent experience across the wider site.</p>
+            <span class="compare-hint">Toggle to compare</span>
+            <div class="compare-panel">
+              <div class="compare-tabs-full">
+                <button type="button" class="compare-tab-full active" data-tab="after">After</button>
+                <button type="button" class="compare-tab-full" data-tab="before">Before</button>
+              </div>
+              <div class="compare-media">
+                <video class="compare-video compare-old" src="Videos/Homepageold.mov" muted loop playsinline></video>
+                <video class="compare-video compare-new" src="Videos/Homepagenew.mp4" autoplay muted loop playsinline></video>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-item">
+            <h3 class="product-title">Swim School</h3>
+            <p>Programmes became the primary content structure, replacing one long information-heavy page. Each pathway now has its own dedicated page with clear levels, goals, and progression details. The rebuild improves wayfinding by allowing users to explore the programme most relevant to them without unnecessary scrolling.</p>
+            <span class="compare-hint">Toggle to compare</span>
+            <div class="compare-panel">
+              <div class="compare-tabs-full">
+                <button type="button" class="compare-tab-full active" data-tab="after">After</button>
+                <button type="button" class="compare-tab-full" data-tab="before">Before</button>
+              </div>
+              <div class="compare-media">
+                <video class="compare-video compare-old" src="Videos/Swimscoolold.mov" muted loop playsinline></video>
+                <video class="compare-video compare-new" src="Videos/swimschoolnew.mp4" autoplay muted loop playsinline></video>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-item">
+            <h3 class="product-title">Centre Policies</h3>
+            <p>Policies became organised categories rather than a flat document list. Each card provides essential context before users open a policy, improving scanability and reducing search effort. The rebuild replaces static PDFs with structured, responsive pages that are easier to navigate, read, and maintain.</p>
+            <span class="compare-hint">Toggle to compare</span>
+            <div class="compare-panel">
+              <div class="compare-tabs-full">
+                <button type="button" class="compare-tab-full active" data-tab="after">After</button>
+                <button type="button" class="compare-tab-full" data-tab="before">Before</button>
+              </div>
+              <div class="compare-media">
+                <video class="compare-video compare-old" src="Videos/Policiesold.mov" muted loop playsinline></video>
+                <video class="compare-video compare-new" src="Videos/policiesnew.mov" autoplay muted loop playsinline></video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="design-system reveal">
+          <h3 class="ds-title">Design system</h3>
+          <p class="ds-sub">Built for consistency across pages, clean handoff, and future iteration.</p>
+
+          <div class="ds-panel">
+            <div class="ds-block">
+              <p class="ds-label">Typefaces</p>
+              <div class="ds-fonts">
+                <div class="ds-font-swatch">
+                  <span class="ds-aa" style="font-family:'Archivo', sans-serif; font-weight:400;">Aa</span>
+                  <span class="ds-font-name">Archivo</span>
+                </div>
+                <div class="ds-font-swatch">
+                  <span class="ds-aa" style="font-family:'Archivo Black', sans-serif;">Aa</span>
+                  <span class="ds-font-name">Archivo Black</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ds-block">
+              <p class="ds-label">Colours</p>
+              <div class="ds-marquee">
+                <div class="ds-marquee-track">
+                  <div class="ds-swatch-group">
+                    <span class="ds-group-label">Navy &amp; blue</span>
+                    <div class="ds-swatches">
+                      <span class="ds-swatch" style="background:#05101f;" title="ink #05101f"></span>
+                      <span class="ds-swatch" style="background:#081a38;" title="deep #081a38"></span>
+                      <span class="ds-swatch" style="background:#0a2348;" title="navy #0a2348"></span>
+                      <span class="ds-swatch" style="background:#1464d8;" title="blue #1464d8"></span>
+                      <span class="ds-swatch" style="background:#3d8eff;" title="bright #3d8eff"></span>
+                      <span class="ds-swatch" style="background:#00b8d4;" title="pool #00b8d4"></span>
+                    </div>
+                  </div>
+                  <div class="ds-swatch-group">
+                    <span class="ds-group-label">Orange</span>
+                    <div class="ds-swatches">
+                      <span class="ds-swatch" style="background:#ff6a1a;" title="orange #ff6a1a"></span>
+                    </div>
+                  </div>
+                  <div class="ds-swatch-group">
+                    <span class="ds-group-label">Neutrals</span>
+                    <div class="ds-swatches">
+                      <span class="ds-swatch" style="background:#edf2f9; border:1px solid var(--line);" title="paper #edf2f9"></span>
+                      <span class="ds-swatch" style="background:#ffffff; border:1px solid var(--line);" title="white #ffffff"></span>
+                      <span class="ds-swatch" style="background:#6e85a3;" title="muted #6e85a3"></span>
+                    </div>
+                  </div>
+                  <div class="ds-swatch-group" aria-hidden="true">
+                    <span class="ds-group-label">Navy &amp; blue</span>
+                    <div class="ds-swatches">
+                      <span class="ds-swatch" style="background:#05101f;"></span>
+                      <span class="ds-swatch" style="background:#081a38;"></span>
+                      <span class="ds-swatch" style="background:#0a2348;"></span>
+                      <span class="ds-swatch" style="background:#1464d8;"></span>
+                      <span class="ds-swatch" style="background:#3d8eff;"></span>
+                      <span class="ds-swatch" style="background:#00b8d4;"></span>
+                    </div>
+                  </div>
+                  <div class="ds-swatch-group" aria-hidden="true">
+                    <span class="ds-group-label">Orange</span>
+                    <div class="ds-swatches">
+                      <span class="ds-swatch" style="background:#ff6a1a;"></span>
+                    </div>
+                  </div>
+                  <div class="ds-swatch-group" aria-hidden="true">
+                    <span class="ds-group-label">Neutrals</span>
+                    <div class="ds-swatches">
+                      <span class="ds-swatch" style="background:#edf2f9; border:1px solid var(--line);"></span>
+                      <span class="ds-swatch" style="background:#ffffff; border:1px solid var(--line);"></span>
+                      <span class="ds-swatch" style="background:#6e85a3;"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- IMPACT ---------- -->
+      <section id="impact">
+        <p class="eyebrow">Impact</p>
+        <h2 class="display reveal">Rebuild in progress</h2>
+        <p class="lede reveal">The redesign was validated by stakeholders and end users, establishing a clearer information architecture, improved discoverability, and a scalable foundation for the upcoming MVP launch.</p>
+        <p class="lede reveal">I led the project end-to-end, from research and UX strategy through design and development, delivering a production-ready experience shaped by user insights and iterative validation.</p>
+
+        <span class="hover-hint">Hover cards to explore</span>
+        <div class="stat-grid reveal">
+          <div class="stat-card">
+            <p class="stat-number"><span class="stat-count" data-target="5">0</span>/6</p>
+            <p class="stat-desc">Stakeholders approved the redesigned experience and supported moving forward with implementation.</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-number"><span class="stat-count" data-target="5">0</span>/5</p>
+            <p class="stat-desc">Reception staff validated the new customer journeys, confirming they were clearer and easier to support.</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-number"><span class="stat-count" data-target="12">0</span></p>
+            <p class="stat-desc">Returning customers tested the redesigned experience, providing positive feedback that informed the final refinements before launch.</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-number"><span class="stat-count" data-target="98">0</span>%</p>
+            <p class="stat-desc">Participants preferred the redesigned navigation over the existing website, validating the new information architecture and overall user experience.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- REFLECTIONS ---------- -->
+      <section id="reflections">
+        <p class="eyebrow">Reflections</p>
+        <h2 class="display reveal">What this project reinforced</h2>
+
+        <div class="reflection-item reveal">
+          <div class="reflection-head">
+            <svg class="reflection-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/></svg>
+            <h3>Designing around real user needs, not assumptions</h3>
+          </div>
+          <p>This project reinforced that effective UX extends beyond interfaces. Research with customers, staff, and stakeholders revealed organisational challenges that shaped a clearer, more scalable user experience.</p>
+        </div>
+
+        <div class="reflection-item reveal">
+          <div class="reflection-head">
+            <svg class="reflection-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h6M9 16h6M9 8h3"/></svg>
+            <h3>Simplifying without losing important information</h3>
+          </div>
+          <p>The key challenge was balancing simplicity with the volume of information LeisureWorld provides. Rather than removing content, the focus was on restructuring information architecture to help users find what they need more easily.</p>
+        </div>
+
+        <div class="reflection-item reveal">
+          <div class="reflection-head">
+            <svg class="reflection-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.4 2.4L16 9.5"/></svg>
+            <h3>The importance of validation before launch</h3>
+          </div>
+          <p>Further validation with real customers will be essential before launch. Testing with members, parents, and visitors will help identify remaining friction points and ensure the experience supports real user needs.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <section class="closing wrap reveal">
+    <div class="closing-divider"></div>
+    <p class="closing-text">Thank you</p>
+
+    <div class="contact-block">
+      <img class="contact-photo" src="Images/mainnik.jpg" alt="Nikita Joisa">
+      <p class="contact-name">Nikita Joisa</p>
+      <p class="contact-role">UX/UI Designer &amp; Developer</p>
+
+      <p class="contact-cta">Open for new projects!</p>
+      <a class="contact-email" href="mailto:nikitajoisaie@gmail.com">nikitajoisaie@gmail.com</a>
+    </div>
+  </section>
+
+<script>
+  // Reveal-on-scroll for both the intro pages and the case study
+  const revealItems = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if(entry.isIntersecting){
+        setTimeout(() => entry.target.classList.add('in-view'), (i % 6) * 60);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealItems.forEach(el => revealObserver.observe(el));
+
+  // Before/After compare toggle: only one video is shown at a time —
+  // "Before" plays the old version, "After" plays the new version.
+  document.querySelectorAll('.compare-panel').forEach(panel => {
+    const tabs = panel.querySelectorAll('.compare-tab-full');
+    const oldVideo = panel.querySelector('.compare-old');
+    const newVideo = panel.querySelector('.compare-new');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        if(tab.classList.contains('active')) return;
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const showBefore = tab.dataset.tab === 'before';
+        panel.classList.toggle('is-comparing', showBefore);
+        if(showBefore){
+          newVideo.pause();
+          oldVideo.currentTime = 0;
+          oldVideo.play();
+        } else {
+          oldVideo.pause();
+          newVideo.play();
+        }
+      });
+    });
+  });
+
+  // Impact stat cards: count up from 0 to the target whenever the card is hovered
+  document.querySelectorAll('.stat-card').forEach(card => {
+    const countEl = card.querySelector('.stat-count');
+    if(!countEl) return;
+    const target = parseInt(countEl.dataset.target, 10);
+    let animating = false;
+    card.addEventListener('mouseenter', () => {
+      if(animating) return;
+      animating = true;
+      const duration = 900;
+      const start = performance.now();
+      countEl.textContent = 0;
+      function tick(now){
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        countEl.textContent = Math.round(eased * target);
+        if(progress < 1){
+          requestAnimationFrame(tick);
+        } else {
+          animating = false;
+        }
+      }
+      requestAnimationFrame(tick);
+    });
+  });
+
+  // Scrollspy: highlight the active sidebar link based on scroll position
+  const navLinks = document.querySelectorAll('.nav-link');
+  const navSections = [...navLinks].map(link => document.querySelector(link.getAttribute('href')));
+
+  function onScroll(){
+    let current = null;
+    const scrollPos = window.scrollY + 140;
+    navSections.forEach(sec => {
+      if(sec && sec.offsetTop <= scrollPos) current = sec;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', current && link.getAttribute('href') === '#' + current.id);
+    });
+  }
+  document.addEventListener('scroll', onScroll);
+  onScroll();
+
+  // About-me photo viewer: clicking a thumbnail swaps the main image
+  const galleryMainImg = document.getElementById('gallery-main-img');
+  const galleryThumbs = document.querySelectorAll('#gallery-thumbs .thumb');
+  galleryThumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      if(!galleryMainImg) return;
+      galleryMainImg.src = thumb.getAttribute('data-full');
+      galleryThumbs.forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    });
+  });
+
+  // Problem cards: hover or click swaps the screenshot preview above the grid
+  const problemSsImg = document.getElementById('problem-ss-img');
+  const problemCards = document.querySelectorAll('#problem-cards .num-card');
+  if(problemSsImg && problemCards.length){
+    const setActiveCard = (card) => {
+      const img = card.getAttribute('data-img');
+      const alt = card.getAttribute('data-alt');
+      if(!img || problemSsImg.getAttribute('src') === img) return;
+      problemCards.forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      problemSsImg.classList.add('is-fading');
+      setTimeout(() => {
+        problemSsImg.src = img;
+        if(alt) problemSsImg.alt = alt;
+        problemSsImg.classList.remove('is-fading');
+      }, 200);
+    };
+    problemCards.forEach(card => {
+      card.addEventListener('mouseenter', () => setActiveCard(card));
+      card.addEventListener('click', () => setActiveCard(card));
+    });
+  }
+
+  // Manifesto statement: types out letter by letter, then leaves a blinking cursor
+  const statementEl = document.querySelector('.manifesto p.statement');
+  if(statementEl){
+    const segments = [
+      { text: 'One live, ongoing project, shown ', accent: false },
+      { text: 'deeply', accent: true },
+      { text: ', beats five shown shallow.', accent: false }
+    ];
+    const fullLength = segments.reduce((sum, s) => sum + s.text.length, 0);
+    function renderTyped(count){
+      let remaining = count;
+      let html = '';
+      segments.forEach(seg => {
+        if(remaining <= 0) return;
+        const take = Math.min(seg.text.length, remaining);
+        const part = seg.text.slice(0, take);
+        html += seg.accent ? '<span class="accent-word">' + part + '</span>' : part;
+        remaining -= take;
+      });
+      return html + '<span class="typing-cursor"></span>';
+    }
+    statementEl.innerHTML = renderTyped(0);
+    const statementObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(!entry.isIntersecting) return;
+        let i = 0;
+        const typeTimer = setInterval(() => {
+          i++;
+          statementEl.innerHTML = renderTyped(i);
+          if(i >= fullLength) clearInterval(typeTimer);
+        }, 80);
+        statementObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.4 });
+    statementObserver.observe(statementEl);
+  }
+
+  // Bridge transition: scroll-linked fade + rise into place
+  const bridgeSection = document.querySelector('.bridge');
+  const bridgeText = document.querySelector('.bridge-text');
+  if(bridgeSection && bridgeText){
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(prefersReducedMotion){
+      bridgeText.style.opacity = 1;
+      bridgeText.style.transform = 'none';
+    } else {
+      let bridgeTicking = false;
+      const updateBridge = () => {
+        const rect = bridgeSection.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const raw = 1 - (rect.top / vh);
+        const progress = Math.min(Math.max(raw, 0), 1);
+        const eased = progress * progress * (3 - 2 * progress);
+        bridgeText.style.opacity = eased;
+        bridgeText.style.transform = `translateY(${(1 - eased) * 36}px)`;
+        bridgeTicking = false;
+      };
+      const onBridgeScroll = () => {
+        if(!bridgeTicking){
+          window.requestAnimationFrame(updateBridge);
+          bridgeTicking = true;
+        }
+      };
+      window.addEventListener('scroll', onBridgeScroll, { passive: true });
+      window.addEventListener('resize', onBridgeScroll);
+      updateBridge();
+    }
+  }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  const growIn = {
+    duration: 1400,
+    easing: 'easeOutQuart',
+    delay(ctx) {
+      if (ctx.type === 'data') {
+        return ctx.datasetIndex * 220 + ctx.dataIndex * 60;
+      }
+      return 0;
+    }
+  };
+
+  function createTrendChart(){
+    new Chart(document.getElementById('trendChart'), {
+      type: 'line',
+      data: {
+        labels: ['Stage 1', 'Stage 2', 'Stage 3', 'Stage 4', 'Stage 5'],
+        datasets: [
+          { label: 'Parent', data: [0, -1, -1, 1, 2], borderColor: '#2a78d6', backgroundColor: '#2a78d6', borderWidth: 2, pointRadius: 4, tension: 0.3 },
+          { label: 'Member', data: [1, 0, -1, 1, 1], borderColor: '#eb6834', backgroundColor: '#eb6834', borderWidth: 2, pointRadius: 4, tension: 0.3, borderDash: [6, 3] },
+          { label: 'Prospect', data: [0, -1, 0, 1, 0], borderColor: '#1baf7a', backgroundColor: '#1baf7a', borderWidth: 2, pointRadius: 4, tension: 0.3 },
+          { label: 'Older customer', data: [1, -1, -2, 1, 2], borderColor: '#eda100', backgroundColor: '#eda100', borderWidth: 2, pointRadius: 4, tension: 0.3, borderDash: [2, 2] },
+          { label: 'Reception', data: [0, -1, -1, -2, 0], borderColor: '#e87ba4', backgroundColor: '#e87ba4', borderWidth: 2, pointRadius: 4, tension: 0.3, borderDash: [6, 3] }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: growIn,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { min: -2.5, max: 2.5, ticks: { stepSize: 1, color: '#898781' }, grid: { color: '#e1e0d9' }, title: { display: true, text: 'Estimated emotion score', color: '#52514e' } },
+          x: { ticks: { color: '#898781' }, grid: { display: false } }
+        }
+      }
+    });
+  }
+
+  function createPriorityChart(){
+    new Chart(document.getElementById('priorityChart'), {
+      type: 'bubble',
+      data: {
+        datasets: [
+          { label: 'Parent', data: [{ x: 3, y: 4, r: 16 }], backgroundColor: '#2a78d6' },
+          { label: 'Member', data: [{ x: 5, y: 3, r: 18 }], backgroundColor: '#eb6834' },
+          { label: 'Prospect', data: [{ x: 2, y: 5, r: 14 }], backgroundColor: '#1baf7a' },
+          { label: 'Older customer', data: [{ x: 4, y: 4, r: 18 }], backgroundColor: '#eda100' },
+          { label: 'Reception', data: [{ x: 5, y: 4, r: 22 }], backgroundColor: '#e87ba4' }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: { padding: 24 },
+        animation: {
+          duration: 1200,
+          easing: 'easeOutBack',
+          delay(ctx) {
+            if (ctx.type === 'data') return ctx.datasetIndex * 180;
+            return 0;
+          }
+        },
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { min: 0, max: 6, title: { display: true, text: 'Frequency (how often it occurs)', color: '#52514e' }, ticks: { stepSize: 1, color: '#898781' }, grid: { color: '#e1e0d9' } },
+          y: { min: 0, max: 6, title: { display: true, text: 'Severity (how much it hurts)', color: '#52514e' }, ticks: { stepSize: 1, color: '#898781' }, grid: { color: '#e1e0d9' } }
+        }
+      }
+    });
+  }
+
+  // Only build each chart once it scrolls into view, so the draw-in animation
+  // actually plays for the viewer instead of finishing off-screen.
+  const chartBuilders = {
+    trendChart: createTrendChart,
+    priorityChart: createPriorityChart
+  };
+  const chartObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(!entry.isIntersecting) return;
+      const build = chartBuilders[entry.target.id];
+      if(build){
+        build();
+        chartObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('#trendChart, #priorityChart').forEach(el => chartObserver.observe(el));
+</script>
+
+</body>
+</html>
