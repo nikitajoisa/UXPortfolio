@@ -28,6 +28,7 @@
 
   *{ box-sizing: border-box; }
   html{ scroll-behavior: smooth; }
+  img, video{ max-width: 100%; }
   body{
     margin:0;
     background-color: var(--bg);
@@ -242,12 +243,13 @@
   .cover-word{
     font-family: var(--script);
     font-weight: 400;
-    font-size: clamp(90px, 18vw, 260px);
+    font-size: clamp(44px, 18vw, 260px);
     line-height: 0.85;
     letter-spacing: 0;
     color: var(--accent);
     margin: 0;
     display: inline-block;
+    max-width: 100%;
     transition: transform .35s ease;
   }
   .cover-word:hover{ transform: translateY(-14px); }
@@ -1129,6 +1131,18 @@
     .stat-grid{ grid-template-columns: 1fr; }
     .process-step{ grid-template-columns: 44px 1fr; gap: 16px; }
     .reflection-item{ grid-template-columns: 1fr; gap: 16px; padding: 32px 0; }
+  }
+
+  /* ---------- phones (overflow-prevention only; no spacing/whitespace changes above 600px) ---------- */
+  @media (max-width: 600px){
+    .site-mark{ top: -20px; }
+    .site-mark img{ width: 120px; height: 120px; }
+    .home-dock{ gap: 14px; padding: 14px 16px; }
+    .dock-icon{ width: 48px; height: 48px; }
+    .dock-label{ font-size: 12px; }
+    .top-icons a{ width: 36px; height: 36px; }
+    .chart-card .chart-wrap{ height: 220px; }
+    .chart-card .chart-wrap.tall{ height: 250px; }
   }
 </style>
 </head>
