@@ -76,7 +76,6 @@
     height: 40px;
     color: var(--ink);
   }
-  .top-icons a:hover{ color: var(--accent); }
   .top-icons svg{ width: 100%; height: 100%; }
   .top-icons a::after{
     content: attr(data-tooltip);
@@ -252,7 +251,6 @@
     max-width: 100%;
     transition: transform .35s ease;
   }
-  .cover-word:hover{ transform: translateY(-14px); }
 
   .home-dock{
     display:flex;
@@ -284,7 +282,6 @@
     overflow: hidden;
     transition: transform .2s ease;
   }
-  .dock-item:hover .dock-icon{ transform: translateY(-4px); }
   .dock-icon img{ width: 60%; height: 60%; object-fit: contain; }
   .dock-icon-photo{ padding: 0; }
   .dock-icon-photo img{ width: 100%; height: 100%; object-fit: cover; }
@@ -393,7 +390,6 @@
     border-radius: 4px;
     margin-bottom: 6px;
   }
-  .thumb:hover{ background: var(--card-bg-muted); }
   .thumb.active{ background: var(--accent-soft); border-color: var(--accent); }
   .mac-main{
     flex: 1;
@@ -535,7 +531,6 @@
     cursor: pointer;
     margin-bottom: 44px;
   }
-  .top-btn:hover{ border-color: var(--ink-soft); }
 
   .toc{
     list-style: none;
@@ -554,7 +549,6 @@
     color: var(--gray);
     transition: color .15s ease;
   }
-  .toc a:hover{ color: var(--ink); }
   .toc a.active{ color: var(--accent); font-weight: 500; }
 
   main{ min-width: 0; max-width: 760px; }
@@ -619,8 +613,22 @@
   }
 
   @media (max-width: 860px){
-    .hero-visual{ padding: 0; margin-bottom: 40px; }
-    .hero-float{ position: static; width: 100%; margin-top: 14px; box-shadow: none; border: 1px solid var(--line); }
+    .hero-visual{
+      padding: 0;
+      margin-bottom: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .hero-shot{ flex: 1 1 100%; }
+    .hero-float{
+      position: static;
+      flex: 1 1 calc(50% - 7px);
+      width: auto;
+      margin-top: 0;
+      box-shadow: none;
+      border: 1px solid var(--line);
+    }
   }
 
   /* ---------- problem screenshot preview ---------- */
@@ -657,7 +665,6 @@
     cursor: pointer;
     transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
   }
-  .num-card:hover,
   .num-card.active{
     border-color: var(--accent);
     box-shadow: 0 0 0 1px var(--accent);
@@ -675,7 +682,6 @@
     margin-bottom: 12px;
     transition: background .18s ease, color .18s ease;
   }
-  .num-card:hover .badge-num,
   .num-card.active .badge-num{
     background: var(--accent);
     color: #fff;
@@ -749,6 +755,7 @@
     gap: 32px;
     margin-bottom: 64px;
   }
+  .process-step > div{ min-width: 0; }
   .process-step + .process-step{ border-top: 1px solid var(--line); padding-top: 48px; }
   .process-step .step-num{
     font-family: var(--serif);
@@ -1108,12 +1115,34 @@
     padding-bottom: 2px;
     transition: color .15s ease, border-color .15s ease;
   }
-  .contact-email:hover{ color: var(--accent); border-color: var(--accent); }
+
+  /* ---------- hover-only affordances: skipped entirely on touch/no-hover devices ---------- */
+  @media (hover: hover) and (pointer: fine){
+    .top-icons a:hover{ color: var(--accent); }
+    .cover-word:hover{ transform: translateY(-14px); }
+    .dock-item:hover .dock-icon{ transform: translateY(-4px); }
+    .thumb:hover{ background: var(--card-bg-muted); }
+    .top-btn:hover{ border-color: var(--ink-soft); }
+    .toc a:hover{ color: var(--ink); }
+    .num-card:hover{
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+      transform: translateY(-2px);
+    }
+    .num-card:hover .badge-num{
+      background: var(--accent);
+      color: #fff;
+    }
+    .contact-email:hover{ color: var(--accent); border-color: var(--accent); }
+  }
 
   @media (max-width: 860px){
     .wrap{ padding: 0 22px; }
-    .site-mark{ top: -60px; left: 22px; }
-    .top-icons{ top: 24px; right: 22px; gap: 10px; }
+    /* Below this width there's no side margin for a fixed mark/icons to float
+       in without overlapping body text as the page scrolls, so anchor them to
+       the top of the document instead — visible on load, then scrolls away. */
+    .site-mark{ position: absolute; top: -60px; left: 22px; }
+    .top-icons{ position: absolute; top: 24px; right: 22px; gap: 10px; }
     .top-icons a{ width: 32px; height: 32px; }
     .about-grid{ grid-template-columns: 1fr; grid-template-rows: none; gap: 32px; }
     .about-title, .portrait, .about-body{ grid-column: 1; grid-row: auto; }
@@ -1131,6 +1160,14 @@
     .stat-grid{ grid-template-columns: 1fr; }
     .process-step{ grid-template-columns: 44px 1fr; gap: 16px; }
     .reflection-item{ grid-template-columns: 1fr; gap: 16px; padding: 32px 0; }
+    .reflection-item p{ margin-top: 16px; }
+    .chart-card{ padding: 18px 18px 16px; margin-top: 20px; }
+    .chart-card .chart-title{ font-size: 15px; }
+    .chart-card .chart-sub{ margin-bottom: 12px; }
+    .chart-card .legend{ gap: 10px; margin-bottom: 10px; }
+    .chart-card .chart-wrap{ height: 190px; }
+    .chart-card .chart-wrap.tall{ height: 210px; }
+    .closing{ padding-bottom: 140px; }
   }
 
   /* ---------- phones (overflow-prevention only; no spacing/whitespace changes above 600px) ---------- */
@@ -1141,8 +1178,9 @@
     .dock-icon{ width: 48px; height: 48px; }
     .dock-label{ font-size: 12px; }
     .top-icons a{ width: 36px; height: 36px; }
-    .chart-card .chart-wrap{ height: 220px; }
-    .chart-card .chart-wrap.tall{ height: 250px; }
+    .chart-card{ padding: 16px 16px 14px; }
+    .chart-card .chart-wrap{ height: 160px; }
+    .chart-card .chart-wrap.tall{ height: 180px; }
   }
 </style>
 </head>
@@ -1676,7 +1714,6 @@
         <p class="lede reveal">The redesign was validated by stakeholders and end users, establishing a clearer information architecture, improved discoverability, and a scalable foundation for the upcoming MVP launch.</p>
         <p class="lede reveal">I led the project end-to-end, from research and UX strategy through design and development, delivering a production-ready experience shaped by user insights and iterative validation.</p>
 
-        <span class="hover-hint">Hover cards to explore</span>
         <div class="stat-grid reveal">
           <div class="stat-card">
             <p class="stat-number"><span class="stat-count" data-target="5">0</span>/6</p>
@@ -1782,15 +1819,12 @@
     });
   });
 
-  // Impact stat cards: count up from 0 to the target whenever the card is hovered
+  // Impact stat cards: count up from 0 to the target once the card scrolls into view.
   document.querySelectorAll('.stat-card').forEach(card => {
     const countEl = card.querySelector('.stat-count');
     if(!countEl) return;
     const target = parseInt(countEl.dataset.target, 10);
-    let animating = false;
-    card.addEventListener('mouseenter', () => {
-      if(animating) return;
-      animating = true;
+    function runCount(){
       const duration = 900;
       const start = performance.now();
       countEl.textContent = 0;
@@ -1800,12 +1834,18 @@
         countEl.textContent = Math.round(eased * target);
         if(progress < 1){
           requestAnimationFrame(tick);
-        } else {
-          animating = false;
         }
       }
       requestAnimationFrame(tick);
-    });
+    }
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(!entry.isIntersecting) return;
+        runCount();
+        statObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.5 });
+    statObserver.observe(card);
   });
 
   // Scrollspy: highlight the active sidebar link based on scroll position
